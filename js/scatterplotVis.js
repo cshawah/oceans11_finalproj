@@ -89,9 +89,10 @@ class ScatterplotVis {
 
         vis.x.domain(vis.displayData.map(d=> d.ShareWomen));
 
-        // y domain
+        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)), d3.max(vis.displayData.map(d=> d.ShareWomen))]);
 
-        vis.y.domain(vis.displayData.map(d=> d.Median));
+        // y domain
+        vis.y.domain([d3.min(vis.displayData.map(d=> d.Median)), d3.max(vis.displayData.map(d=> d.Median))]);
 
 
         vis.circles = vis.svg.selectAll("circle")
