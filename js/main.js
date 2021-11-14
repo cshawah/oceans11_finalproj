@@ -2,7 +2,7 @@
 let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
-let boxandwhisker, scatterplot;
+let boxandwhisker, scatterplot, groupedbarchart, divergingbarchart;
 
 // (1) Load data with promises
 let promises = [
@@ -56,4 +56,6 @@ function createVis(data) {
 
     boxandwhisker = new BoxandWhiskerVis("salary_diffs", data, majorCategoryColors);
     scatterplot = new ScatterplotVis('gender_salary_bars', data);
+    groupedbarchart = new GroupedBarChart('employment_diffs', data);
+    divergingbarchart = new DivergingBarChart('gender_diffs_bars', data);
 }
