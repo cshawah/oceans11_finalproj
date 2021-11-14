@@ -13,8 +13,6 @@ d3.csv("data/recent-grads.csv").then(function (data) {
 // initMainPage
 function initMainPage(dataArray) {
 
-    console.log('check out the data', dataArray);
-
     // init scatterplot
     scatterplot = new ScatterplotVis('gender_salary_bars', dataArray);
     // Function to convert date objects to strings or reverse
