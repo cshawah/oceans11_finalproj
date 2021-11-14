@@ -7,10 +7,10 @@
 
 class BoxandWhiskerVis {
 
-    constructor(_parentElement, _data, _eventHandler) {
+    constructor(_parentElement, _data, _majorCategoryColors) {
         this.parentElement = _parentElement;
         this.data = _data;
-        this.eventHandler = _eventHandler;
+        this.majorCategoryColors = _majorCategoryColors;
 
         this.initVis();
     }
@@ -134,7 +134,7 @@ class BoxandWhiskerVis {
             .attr("height", d => vis.y(d["P25th"]) - vis.y(d["P75th"]))
             .attr("width", boxWidth)
             .attr("stroke", "black")
-            .style("fill", "#69b3a2")
+            .style("fill", d => vis.majorCategoryColors[d.Major_category]) // TODO: create a legend for the category colors
 
         // median lines of each box
         vis.medianLines = vis.svg.selectAll('.median-line')

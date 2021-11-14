@@ -65,11 +65,12 @@ class ScatterplotVis {
         let vis = this
 
         vis.displayData.forEach(function(d){
-
             if (d.ShareWomen) {
 
                 d.ShareWomen = +d.ShareWomen
-                return d.ShareWomen
+
+                d.Median = +d.Median
+                return d
             }
         })
 
@@ -85,50 +86,32 @@ class ScatterplotVis {
 
         // x domain
 
+        vis.x.domain(vis.displayData.map(d=> d.ShareWomen));
+
         // y domain
+
+        vis.y.domain(vis.displayData.map(d=> d.Median));
 
 
         vis.circles = vis.svg.selectAll("circle")
-            .data(this.displayData);
+            .data(vis.displayData);
 
         vis.circles.enter()
             .append("circle")
-            .attr("x", function(d){
-                return vis.x(parseInt(d.ShareWomen))
+            .attr("cx", function(d){
+                return vis.x(d.ShareWomen)
             })
-            .attr("class", "plot")
+            .attr("class", "circle")
             .merge(vis.circles)
-            .attr("y",function(d){
-                return vis.y(0)
+            .attr("cy",function(d){
+                return vis.y(d.Median)
             })
-            .attr("width", vis.x.bandwidth())
-            .attr("height", function(d){
-                return vis.height - vis.y(d[selected])
-            }).on('mouseover', function(event, d){
-            vis.tooltip
-                .style("opacity", 1)
-                .style("left", event.pageX + 20 + "px")
-                .style("top", event.pageY + "px")
-                .html(`
-         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-            <h3>${d.state}<h3>
-            <h4>Population : ${d.population}<h4>
-            <h4>Cases(absolute) :${d.absCases}</h4> 
-            <h4>Deaths: ${d.absDeaths}</h4>         
-            <h4>Cases(relative) :${d.relCases.toFixed(2)}%</h4>            
-            <h4>Deaths(relative) :${d.relDeaths.toFixed(2)}%</h4>                       
-         </div>`);
-
-        })
-            .on('mouseout', function(){
-                vis.tooltip
-                    .style("opacity", 0)
-                    .style("left", 0)
-                    .style("top", 0)
-                    .html(``);
+            .attr("r", function(d){
+                return 7
             })
+            .style('fill', 'green');
 
-        vis.rect.exit().remove();
+        vis.circles.exit().remove();
 
         vis.xAxisGroup = vis.svg.select(".x-axis")
             .attr("transform", "translate(0," + vis.height + ")")
