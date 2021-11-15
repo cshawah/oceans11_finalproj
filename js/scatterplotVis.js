@@ -38,6 +38,15 @@ class ScatterplotVis {
         //     .range(["rgb(237,248,233)", "rgb(186,228,179)",
         //         "rgb(116,196,118)", "rgb(49,163,84)", "rgb(0,109,44)"])
 
+        // D3 color scale.
+        vis.categories = new Set()
+
+        for (let i = 0; i< vis.displayData.length; i++) {
+            vis.categories.add(vis.displayData[i].Major_category)
+        };
+
+        vis.colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#8B00FF', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
+
         // Scales and axes
         vis.x = d3.scaleLinear()
             .range([0, vis.width]);
@@ -75,8 +84,6 @@ class ScatterplotVis {
             }
         })
 
-        console.log(vis.displayData)
-
 
         vis.updateVis()
 
@@ -87,16 +94,16 @@ class ScatterplotVis {
 
         // x domain
 
-        vis.x.domain(vis.displayData.map(d=> d.ShareWomen));
-
-        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)), d3.max(vis.displayData.map(d=> d.ShareWomen))]);
+        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)) - 0.01, d3.max(vis.displayData.map(d=> d.ShareWomen)) + 0.1]);
 
         // y domain
-        vis.y.domain([d3.min(vis.displayData.map(d=> d.Median)), d3.max(vis.displayData.map(d=> d.Median))]);
+        vis.y.domain([d3.min(vis.displayData.map(d=> d.Median)) - 5000, d3.max(vis.displayData.map(d=> d.Median))+ 5000]);
 
 
         vis.circles = vis.svg.selectAll("circle")
             .data(vis.displayData);
+
+        console.log(vis.displayData)
 
         vis.circles.enter()
             .append("circle")
@@ -109,9 +116,11 @@ class ScatterplotVis {
                 return vis.y(d.Median)
             })
             .attr("r", function(d){
-                return 7
+                return 5
             })
-            .style('fill', 'green');
+            .style('fill', function(d, i){
+                return vis.colors[[...vis.categories].indexOf(d.Major_category)];
+            }).attr("stroke", "green");
 
         vis.circles.exit().remove();
 
