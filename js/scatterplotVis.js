@@ -58,7 +58,12 @@ class ScatterplotVis {
         vis.xAxis = d3.axisBottom()
             .scale(vis.x);
 
-        // Axis title
+        // y-Axis title
+        vis.svg.append("text")
+            .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 10) + ")")
+            .text("Average Sharewomen");
+
+        // y-Axis title
         vis.svg.append("text")
             .attr("x", -50)
             .attr("y", -9)
