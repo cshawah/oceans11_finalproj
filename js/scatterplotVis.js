@@ -58,6 +58,12 @@ class ScatterplotVis {
         vis.xAxis = d3.axisBottom()
             .scale(vis.x);
 
+        // Axis title
+        vis.svg.append("text")
+            .attr("x", -50)
+            .attr("y", -9)
+            .text("Average Median");
+
         vis.yAxis = d3.axisLeft()
             .scale(vis.y);
 
