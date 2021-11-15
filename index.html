@@ -49,13 +49,15 @@
 		<div class="row">
 			<div class="col col-md-12">
 				<h4>Employment Diffs by Majors — PLACEHOLDER</h4>
-				<div id="employment_diffs"></div>
+				<div id="employment">
+					<canvas id="employment_diffs"></canvas>
+				</div>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col col-md-12">
-				<h4>Salary Diffs by Majors — Implemented in D3</h4>
+				<h4>Salaries by Majors (Top 20) — Implemented in D3</h4>
 				<div id="salary_diffs"></div>
 			</div>
 		</div>
@@ -77,11 +79,13 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 	<!-- d3 -->
 	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
 	<!-- own js files -->
 	<script src="js/main.js"></script>
-	<script src="js/scatterplotVis.js"></script>
-
 	<script src="js/boxandwhisker.js"></script>
-
+	<script src="js/scatterplotVis.js"></script>
+	<script src="js/groupedbarchart.js"></script>
+	<script src="js/divergingbarchart.js"></script>
 	</body>
 </html>

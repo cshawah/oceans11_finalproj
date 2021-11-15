@@ -7,10 +7,10 @@
 
 class BoxandWhiskerVis {
 
-    constructor(_parentElement, _data, _eventHandler) {
+    constructor(_parentElement, _data, _majorCategoryColors) {
         this.parentElement = _parentElement;
         this.data = _data;
-        this.eventHandler = _eventHandler;
+        this.majorCategoryColors = _majorCategoryColors;
 
         this.initVis();
     }
@@ -22,10 +22,10 @@ class BoxandWhiskerVis {
     initVis() {
         let vis = this;
 
-        vis.margin = { top: 40, right: 0, bottom: 60, left: 60 };
+        vis.margin = { top: 40, right: 0, bottom: 200, left: 60 };
 
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right,
-            vis.height = 500 - vis.margin.top - vis.margin.bottom;
+            vis.height = 800 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -78,11 +78,12 @@ class BoxandWhiskerVis {
 
         // TODO: make sure values for min and max make sense
         vis.displayData.forEach(element => {
+            element.Major = element.Major.includes("ENGINEERING") ? element.Major.replace("ENGINEERING", "ENG.") : element.Major;
             element.interQuantileRange = element["P75th"] - element["P25th"];
             element.minIncome = element["P25th"] - 1.5 * element.interQuantileRange;
             element.minIncome  = element.minIncome > 0 ? element.minIncome : 0;
             element.maxIncome = element["P75th"] + 1.5 * element.interQuantileRange;
-            vis.majors.push(element.Major_code); // TODO: change to major name after rotating ticks so they fit
+            vis.majors.push(element.Major);
         });
 
         vis.displayData = vis.displayData.slice(0, 20);
@@ -115,8 +116,8 @@ class BoxandWhiskerVis {
 
         vis.verticalLines.enter()
             .append('line').attr('class', 'vertical-line')
-            .attr("x1", d => vis.x(d.Major_code) + vis.width/20/2)
-            .attr("x2", d => vis.x(d.Major_code) + vis.width/20/2)
+            .attr("x1", d => vis.x(d.Major) + vis.width/20/2)
+            .attr("x2", d => vis.x(d.Major) + vis.width/20/2)
             .attr("y1", d => vis.y(d.minIncome))
             .attr("y2", d => vis.y(d.maxIncome))
             .attr("stroke", "black")
@@ -129,12 +130,12 @@ class BoxandWhiskerVis {
 
         vis.boxes.enter()
             .append('rect').attr('class', 'box')
-            .attr("x", d => (vis.x(d.Major_code) - boxWidth/2) + vis.width/20/2)
+            .attr("x", d => (vis.x(d.Major) - boxWidth/2) + vis.width/20/2)
             .attr("y", d => vis.y(d["P75th"]))
             .attr("height", d => vis.y(d["P25th"]) - vis.y(d["P75th"]))
             .attr("width", boxWidth)
             .attr("stroke", "black")
-            .style("fill", "#69b3a2")
+            .style("fill", d => vis.majorCategoryColors[d.Major_category]) // TODO: create a legend for the category colors
 
         // median lines of each box
         vis.medianLines = vis.svg.selectAll('.median-line')
@@ -144,8 +145,8 @@ class BoxandWhiskerVis {
 
         vis.medianLines.enter()
             .append('line').attr('class', 'median-line')
-            .attr("x1", d => vis.x(d.Major_code) + vis.width/20/2 - boxWidth/2)
-            .attr("x2", d => vis.x(d.Major_code) + vis.width/20/2 + boxWidth/2)
+            .attr("x1", d => vis.x(d.Major) + vis.width/20/2 - boxWidth/2)
+            .attr("x2", d => vis.x(d.Major) + vis.width/20/2 + boxWidth/2)
             .attr("y1", d => vis.y(d.Median))
             .attr("y2", d => vis.y(d.Median))
             .attr("stroke", "black")
@@ -158,8 +159,8 @@ class BoxandWhiskerVis {
 
         vis.minLines.enter()
             .append('line').attr('class', 'min-line')
-            .attr("x1", d => vis.x(d.Major_code) + vis.width/20/2 - boxWidth/2)
-            .attr("x2", d => vis.x(d.Major_code) + vis.width/20/2 + boxWidth/2)
+            .attr("x1", d => vis.x(d.Major) + vis.width/20/2 - boxWidth/2)
+            .attr("x2", d => vis.x(d.Major) + vis.width/20/2 + boxWidth/2)
             .attr("y1", d => vis.y(d.minIncome))
             .attr("y2", d => vis.y(d.minIncome))
             .attr("stroke", "black")
@@ -172,14 +173,20 @@ class BoxandWhiskerVis {
 
         vis.maxLines.enter()
             .append('line').attr('class', 'mx-line')
-            .attr("x1", d => vis.x(d.Major_code) + vis.width/20/2 - boxWidth/2)
-            .attr("x2", d => vis.x(d.Major_code) + vis.width/20/2 + boxWidth/2)
+            .attr("x1", d => vis.x(d.Major) + vis.width/20/2 - boxWidth/2)
+            .attr("x2", d => vis.x(d.Major) + vis.width/20/2 + boxWidth/2)
             .attr("y1", d => vis.y(d.maxIncome))
             .attr("y2", d => vis.y(d.maxIncome))
             .attr("stroke", "black")
 
         // Call axis functions with the new domain
-        vis.svg.select(".x-axis").call(vis.xAxis);
+        vis.svg.select(".x-axis").call(vis.xAxis)
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-40)");
+        ;
         vis.svg.select(".y-axis").call(vis.yAxis);
     }
 }

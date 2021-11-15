@@ -74,7 +74,6 @@ class ScatterplotVis {
         let vis = this
 
         vis.displayData.forEach(function(d){
-
             if (d.ShareWomen) {
 
                 d.ShareWomen = +d.ShareWomen
@@ -94,10 +93,12 @@ class ScatterplotVis {
 
         // x domain
 
-        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)) - 0.01, d3.max(vis.displayData.map(d=> d.ShareWomen)) + 0.1]);
+        vis.x.domain(vis.displayData.map(d=> d.ShareWomen));
 
         // y domain
         vis.y.domain([d3.min(vis.displayData.map(d=> d.Median)) - 5000, d3.max(vis.displayData.map(d=> d.Median))+ 5000]);
+
+        vis.y.domain(vis.displayData.map(d=> d.Median));
 
 
         vis.circles = vis.svg.selectAll("circle")
