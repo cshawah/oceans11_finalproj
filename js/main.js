@@ -2,7 +2,7 @@
 let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
-let boxandwhisker, scatterplot;
+let boxandwhisker, scatterplot, employmentDiff;
 
 // (1) Load data with promises
 let promises = [
@@ -56,4 +56,5 @@ function createVis(data) {
 
     boxandwhisker = new BoxandWhiskerVis("salary_diffs", data, majorCategoryColors);
     scatterplot = new ScatterplotVis('gender_salary_bars', data);
+    employmentDiff = new EmploymentDiff("employment_diffs", data)
 }
