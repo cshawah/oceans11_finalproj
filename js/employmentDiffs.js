@@ -14,8 +14,6 @@ class EmploymentDiff {
         let vis = this;
 
         vis.margin = {top: 20, right: 20, bottom: 30, left: 40};
-        //vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
-        //vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
         vis.width = 500 - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
@@ -31,31 +29,6 @@ class EmploymentDiff {
         vis.tooltip = d3.select("body").append('div')
             .attr('class', "tooltip")
             .attr('id', 'barTooltip')
-
-       /* // Scales and axes
-        vis.x = d3.scaleBand()
-            .range([10, vis.width])
-            .paddingInner(0.1);
-
-        vis.y = d3.scaleLinear()
-            .range([vis.height, 0]);
-
-        vis.xAxis = d3.axisBottom()
-            .scale(vis.x);
-
-        vis.yAxis = d3.axisLeft()
-            .scale(vis.y);
-
-        vis.svg.append("g")
-            .attr("class", "x-axis axis")
-            .attr("transform", "translate(0," + vis.height + ")");
-
-        vis.svg.append("g")
-            .attr("class", "y-axis axis")
-            .attr("transform", "translate(5" + ",0)");
-
-        vis.colors = d3.scaleLinear()
-            .range(['#fcffff', '#274b4b'])*/
 
         this.wrangleData();
     }
@@ -75,6 +48,7 @@ class EmploymentDiff {
 
         vis.majorCategories.sort((a, b) => a.localeCompare(b))
 
+        // Console for sanity
         console.log(vis.majorCategories)
 
         // Get the individual data
@@ -82,11 +56,10 @@ class EmploymentDiff {
         let counterPartTime = 0
         let counterFullTime = 0
         let counterTotal = 0
-        vis.unemployedCategories = []
+        vis.unemployedCategories = [];
         vis.partTimeCategories = []
         vis.fullTimeCategories = []
         vis.totalCategories = []
-        vis.categoryData = []
 
 
         vis.majorCategories.forEach(function(element) {
@@ -98,29 +71,18 @@ class EmploymentDiff {
                     counterTotal += row.Total
                 }
             })
-            vis.categoryData.push({
-                //"Major": element,
-                "Unemployed": counterUnemployed,
-                "Part Time": counterPartTime,
-                "Full Time": counterFullTime,
-                "Total": counterTotal
-            })
 
             vis.unemployedCategories.push({
-                "Major": element,
-                "Unemployed": counterUnemployed
+                counterUnemployed
             })
             vis.partTimeCategories .push({
-                "Major": element,
-                "Part Time": counterPartTime
+               counterPartTime
             })
             vis.fullTimeCategories.push({
-                "Major": element,
-                "Full Time": counterFullTime
+                counterFullTime
             })
             vis.totalCategories.push({
-                "Major": element,
-                "Total": counterTotal
+                counterTotal
             })
             counterUnemployed = 0
             counterPartTime = 0
@@ -128,13 +90,31 @@ class EmploymentDiff {
             counterTotal = 0
         })
 
-        console.log(vis.categoryData)
+        // Makes sure that the objects pushed into the arrays previously are just numbers
+        vis.unemployedCategories = vis.unemployedCategories.map(function(d)
+        {
+            return Object.values(d)[0]
+        })
+        vis.partTimeCategories = vis.partTimeCategories.map(function(d)
+        {
+            return Object.values(d)[0]
+        })
+        vis.fullTimeCategories = vis.fullTimeCategories.map(function(d)
+        {
+            return Object.values(d)[0]
+        })
+        vis.totalCategories = vis.totalCategories.map(function(d)
+        {
+            return Object.values(d)[0]
+        })
 
+        // Console for sanity
         console.log(vis.unemployedCategories)
-        console.log(vis.partTimeCategories )
+        console.log(vis.partTimeCategories)
         console.log(vis.fullTimeCategories)
         console.log(vis.totalCategories)
 
+        // Loads all of this data into the final dataset needed for grouped bar charts
         vis.display_data = {
             labels: vis.majorCategories,
             datasets: [
@@ -166,19 +146,13 @@ class EmploymentDiff {
     updateVis() {
         let vis = this;
 
-        //vis.colors = ["#ADD8E6", "#4c97bd", "#1d4b73", "#01243b"];
-
-        // update the axes
-        //vis.x.domain(vis.majorCategories.map(d => d))
-
         let ctx = document.getElementById("employment_diffs");
-
-        //let myBarChart = new Chart(ctx).Bar(vis.display_data, { barValueSpacing: 20 });
 
         new Chart(ctx, {
             type: 'bar',
             data: vis.display_data,
             options: {
+
             scales: {
                 yAxes: [{
                     ticks: {
@@ -188,57 +162,6 @@ class EmploymentDiff {
             }
         }
     });
-/*
-        vis.y.domain([0,
-            d3.max(vis.categoryData, d => d.Total)]
-        )
-
-        vis.svg.select(".x-axis")
-            .call(vis.xAxis)
-            .selectAll("text")
-            .attr("transform", "rotate(-10)");
-
-        vis.svg.select(".y-axis")
-            .call(vis.yAxis.tickFormat(d3.format('.2s')))
-
-        vis.rect = vis.svg.selectAll("rect")
-            .data(vis.categoryData);
-
-        vis.rect
-            .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", function (d) {
-                return vis.x(d.state);
-            })
-            .attr("y", function (d) {
-                return vis.y(d[selectedCategory]);
-            })
-            .attr("height", function (d) {
-                return (
-                    vis.height - vis.y(d[selectedCategory])
-                );
-            })
-            .attr("width", vis.x.bandwidth())
-            .attr('stroke-width', '1px')
-            .attr('stroke', 'black')
-            .attr("fill", function (d) {
-                let state = d.state;
-                let color;
-
-                vis.corrected.forEach(d => {
-                    if (d.state === state) {
-                        color = vis.colors(d[selectedCategory])
-                    }
-                })
-
-                return color
-            })
-            .merge(vis.rect)
-
-        vis.rect.exit().remove();
-
- */
     }
 
 }
