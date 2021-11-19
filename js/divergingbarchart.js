@@ -93,9 +93,6 @@ class DivergingBarChart {
 
         vis.majorCategories.sort((a, b) => a.localeCompare(b))
 
-        // Console for sanity
-        console.log(vis.majorCategories);
-
         // Get the individual data
         let totalMajors = 0
         let totalWomen = 0
