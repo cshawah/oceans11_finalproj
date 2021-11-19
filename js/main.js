@@ -57,7 +57,7 @@ function createVis(data) {
     boxandwhisker = new BoxandWhiskerVis("salary_diffs", data, majorCategoryColors);
     scatterplot = new ScatterplotVis('gender_salary_bars', data, majorCategoryColors);
     employmentDiff = new EmploymentDiff("employment_diffs", data)
-  //  divergingbarchart = new DivergingBarChart('gender_diffs_bars', data);
+    divergingbarchart = new DivergingBarChart('gender_diffs_bars', data, majorCategoryColors);
 }
 
 function updateVisualization() {
