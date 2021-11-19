@@ -132,7 +132,7 @@ class ScatterplotVis {
                 return 5
             })
             .style('fill', function(d, i){
-                return vis.colors[[...vis.categories].indexOf(d.Major_category)];
+                return vis.majorCategoryColors[d.Major_category];
             });
 
         vis.circles.exit().remove();

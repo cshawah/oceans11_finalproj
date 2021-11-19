@@ -31,7 +31,7 @@ let promises = [
 
 Promise.all(promises)
     .then(function (data) {
-        createVis(data[0])
+        createVis(data[0]);
     })
     .catch(function (err) {
         console.log(err)
