@@ -1,8 +1,9 @@
 class ScatterplotVis {
-    constructor(parentElement, data) {
+    constructor(parentElement, data, colors) {
         this.parentElement = parentElement;
         this.data = data;
         this.displayData = this.data;
+        this.majorCategoryColors = colors
 
         this.initVis()
     }
@@ -10,7 +11,7 @@ class ScatterplotVis {
     initVis(){
         let vis = this;
 
-        vis.margin = {top: 20, right: 20, bottom: 20, left: 60};
+        vis.margin = {top: 20, right: 20, bottom: 50, left: 60};
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
        // vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
@@ -23,12 +24,12 @@ class ScatterplotVis {
             .attr('transform', `translate (${vis.margin.left}, ${vis.margin.top})`);
 
         // add title
-        vis.svg.append('g')
-            .attr('class', 'title bar-title')
-            .append('text')
-            .text('Gender and Salary Scatter Plot')
-            .attr('transform', `translate(${vis.width / 2}, 10)`)
-            .attr('text-anchor', 'middle');
+        // vis.svg.append('g')
+        //     .attr('class', 'title bar-title')
+        //     .append('text')
+        //     .text('Gender and Salary Scatter Plot')
+        //     .attr('transform', `translate(${vis.width / 2}, 10)`)
+        //     .attr('text-anchor', 'middle');
 
         // append tooltip
         vis.tooltip = d3.select("body").append('div')
@@ -46,7 +47,7 @@ class ScatterplotVis {
             vis.categories.add(vis.displayData[i].Major_category)
         };
 
-        vis.colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#8B00FF', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
+        // vis.colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#8B00FF', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
 
         // Scales and axes
         vis.x = d3.scaleLinear()
@@ -61,7 +62,7 @@ class ScatterplotVis {
 
         // y-Axis title
         vis.svg.append("text")
-            .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 10) + ")")
+            .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 30) + ")")
             .text("Average Sharewomen");
 
         // y-Axis title
