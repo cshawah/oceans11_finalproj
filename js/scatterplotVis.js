@@ -23,12 +23,12 @@ class ScatterplotVis {
             .attr('transform', `translate (${vis.margin.left}, ${vis.margin.top})`);
 
         // add title
-        vis.svg.append('g')
-            .attr('class', 'title bar-title')
-            .append('text')
-            .text('Gender and Salary Scatter Plot')
-            .attr('transform', `translate(${vis.width / 2}, 10)`)
-            .attr('text-anchor', 'middle');
+        // vis.svg.append('g')
+        //     .attr('class', 'title bar-title')
+        //     .append('text')
+        //     .text('Gender and Salary Scatter Plot')
+        //     .attr('transform', `translate(${vis.width / 2}, 10)`)
+        //     .attr('text-anchor', 'middle');
 
         // append tooltip
         vis.tooltip = d3.select("body").append('div')
