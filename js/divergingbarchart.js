@@ -105,7 +105,6 @@ class DivergingBarChart {
         vis.totalPeople = [];
         vis.shareWomen = [];
 
-
         vis.majorCategories.forEach(function(element) {
             vis.data.forEach(function (row) {
                 if(row.Major_category === element) {
@@ -124,7 +123,6 @@ class DivergingBarChart {
             vis.totalPeople.push({
                 totalPeople
             })
-
 
             totalMajors = 0
             totalWomen = 0
