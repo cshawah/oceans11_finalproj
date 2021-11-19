@@ -132,7 +132,9 @@ class ScatterplotVis {
             })
             .style('fill', function(d, i){
                 return vis.colors[[...vis.categories].indexOf(d.Major_category)];
-            }).attr("stroke", "green");
+            }).attr("stroke", function(d, i){
+            return vis.colors[[...vis.categories].indexOf(d.Major_category)];
+        });
 
         vis.circles.exit().remove();
 
