@@ -11,6 +11,7 @@ class InnovativeVis {
         this.parentElement = _parentElement;
         this.data = _data;
         this.majorCategoryColors = _majorCategoryColors;
+        this.displayData = [];
 
         this.initVis();
     }
@@ -60,27 +61,36 @@ class InnovativeVis {
         let vis = this;
         // TODO: make filter buttons on html and then get value of which filter button was selected (all, men, women)
 
-        vis.displayData = [];
+        vis.categoryStats = {};
         let overallTotal = 0;
         let overallMen = 0;
         let overallWomen = 0;
 
         vis.data.forEach(major => {
-            if (!(major.Major_category in vis.displayData)){ // checks if the category is a key in the object yet
-                vis.displayData[major.Major_category] = {
+            if (!(major.Major_category in vis.categoryStats)){ // checks if the category is a key in the object yet
+                vis.categoryStats[major.Major_category] = {
                     Total: major.Total,
                     Women: major.Women,
                     Men: major.Men
-                }
+                };
             }
             else {
-                vis.displayData[major.Major_category].Total += major.Total;
-                vis.displayData[major.Major_category].Women += major.Women;
-                vis.displayData[major.Major_category].Men += major.Men;
+                vis.categoryStats[major.Major_category].Total += major.Total;
+                vis.categoryStats[major.Major_category].Women += major.Women;
+                vis.categoryStats[major.Major_category].Men += major.Men;
             }
             overallTotal += major.Total;
             overallMen += major.Men;
             overallWomen += major.Women;
+        });
+
+        Object.keys(vis.categoryStats).forEach(category => {
+            vis.displayData.push({
+                Category: category,
+                Total: vis.categoryStats[category].Total,
+                Women: vis.categoryStats[category].Women,
+                Men: vis.categoryStats[category].Men
+            });
         });
 
         // Update the visualization
