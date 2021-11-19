@@ -59,3 +59,7 @@ function createVis(data) {
     employmentDiff = new EmploymentDiff("employment_diffs", data)
   //  divergingbarchart = new DivergingBarChart('gender_diffs_bars', data);
 }
+
+function updateVisualization() {
+    boxandwhisker.wrangleData();
+}
