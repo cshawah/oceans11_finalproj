@@ -55,9 +55,30 @@
 			</div>
 		</div>
 
+<!--		['Agriculture & Natural Resources', 'Arts', 'Biology & Life Science', 'Business', 'Communications & Journalism', 'Computers & Mathematics', 'Education', 'Engineering', 'Health', 'Humanities & Liberal Arts', 'Industrial Arts & Consumer Services', 'Interdisciplinary', 'Law & Public Policy', 'Physical Sciences', 'Psychology & Social Work', 'Social Science']-->
+
 		<div class="row">
 			<div class="col col-md-12">
-				<h4>Salaries by Majors (Top 20) — in progress in D3</h4>
+				<h4>Salaries by Majors (Top 20 Median Incomes) — in progress in D3</h4>
+				<select id='selectBox' class="selectpicker" onchange="updateVisualization()">
+					<option value="Overall" selected>Overall</option>
+					<option value="Agriculture & Natural Resources">Agriculture & Natural Resources</option>
+					<option value="Arts">Arts</option>
+					<option value="Biology & Life Science">Biology & Life Science</option>
+					<option value="Business">Business</option>
+					<option value="Communications & Journalism">Communications & Journalism</option>
+					<option value="Computers & Mathematics">Computers & Mathematics</option>
+					<option value="Education">Education</option>
+					<option value="Engineering">Engineering</option>
+					<option value="Health">Health</option>
+					<option value="Humanities & Liberal Arts">Humanities & Liberal Arts</option>
+					<option value="Industrial Arts & Consumer Services">Industrial Arts & Consumer Services</option>
+					<option value="Interdisciplinary">Interdisciplinary</option>
+					<option value="Law & Public Policy">Law & Public Policy</option>
+					<option value="Physical Sciences">Physical Sciences</option>
+					<option value="Psychology & Social Work">Psychology & Social Work</option>
+					<option value="Social Science">Social Science</option>
+				</select>
 				<div id="salary_diffs"></div>
 			</div>
 		</div>
