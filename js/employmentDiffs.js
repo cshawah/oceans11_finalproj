@@ -1,5 +1,3 @@
-console.log("let's get started!")
-
 class EmploymentDiff {
 
     constructor(_parentElement, _data) {
@@ -49,7 +47,7 @@ class EmploymentDiff {
         vis.majorCategories.sort((a, b) => a.localeCompare(b))
 
         // Console for sanity
-        console.log(vis.majorCategories)
+        // console.log(vis.majorCategories)
 
         // Get the individual data
         let counterUnemployed = 0
@@ -109,10 +107,10 @@ class EmploymentDiff {
         })
 
         // Console for sanity
-        console.log(vis.unemployedCategories)
-        console.log(vis.partTimeCategories)
-        console.log(vis.fullTimeCategories)
-        console.log(vis.totalCategories)
+        // console.log(vis.unemployedCategories)
+        // console.log(vis.partTimeCategories)
+        // console.log(vis.fullTimeCategories)
+        // console.log(vis.totalCategories)
 
         // Loads all of this data into the final dataset needed for grouped bar charts
         vis.display_data = {
