@@ -7,7 +7,6 @@ class DivergingBarChart {
 
         this.initVis();
 
-
     }
 
     initVis(){
@@ -37,10 +36,6 @@ class DivergingBarChart {
         vis.x_men = d3.scaleLinear()
             .range([0, (vis.width-250)/2])
             .domain([0, -50]);
-
-        // vis.x_men = d3.scaleLinear()
-        //     .range([0, (vis.width-250)/2])
-        //     .domain([-50, 0]);
 
         vis.y = d3.scaleBand()
             .range([vis.height, 70]);
@@ -150,28 +145,14 @@ class DivergingBarChart {
                 })
         }
 
-        console.log(vis.displayData);
+        vis.catList = [];
 
+        vis.displayData.sort((a, b) => a.genderDiff - b.genderDiff);
 
-
-
-     //    vis.displayData = vis.data;
-         vis.catList = [];
-     //
-         vis.displayData.sort((a, b) => a.genderDiff - b.genderDiff);
-         console.log(vis.displayData);
-     //
         vis.displayData.forEach(element => {
             vis.catList.push(element.majorCat);
         });
 
-        console.log(vis.catList);
-     //
-     // //   vis.displayData = vis.displayData.slice(0, 120);
-     // //   vis.majors = vis.majors.slice(0, 120);
-     //
-     //    console.log(vis.displayData);
-     //
         vis.updateVis()
 
     }
@@ -181,7 +162,6 @@ class DivergingBarChart {
 
         vis.y.domain(vis.catList);
 
-
         vis.bars = vis.svg.selectAll('.box')
             .data(vis.displayData, d => d.index);
 
@@ -190,19 +170,11 @@ class DivergingBarChart {
         vis.bars.enter()
             .append('rect').attr('class', 'box')
             .attr("y", d => (vis.y(d.majorCat)) - 50) // good
-         //   .attr("x", vis.x(0))
             .attr("x", function(d) { if (d.genderDiff > 0) { return (vis.x(0)) } else { return (vis.x(d.genderDiff)) } })
             .attr("height", 13) // good
             .attr("width", function(d) { if (d.genderDiff > 0) { return (vis.x_women(d.genderDiff)) } else { return (vis.x_men(d.genderDiff)) } })
             .attr("stroke", "none")
             .style("fill", d => vis.majorCategoryColors[d.majorCat]);
-
-
-        //function(d) {
-        //             if (d.close <= 400) {return "red"}
-        //             else 	{ return "black" };})
-
-// END
 
         vis.svg.select(".x-axis").call(vis.xAxis)
             .selectAll("text")
@@ -210,9 +182,8 @@ class DivergingBarChart {
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
             .attr("transform", "rotate(-40)");
-        ;
-        vis.svg.select(".y-axis").call(vis.yAxis);
 
+        vis.svg.select(".y-axis").call(vis.yAxis);
 
     }
 
