@@ -63,13 +63,13 @@ class ScatterplotVis {
         // y-Axis title
         vis.svg.append("text")
             .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 30) + ")")
-            .text("Average Sharewomen");
+            .text("Sharewomen");
 
         // y-Axis title
         vis.svg.append("text")
-            .attr("x", -50)
+            .attr("x", -30)
             .attr("y", -9)
-            .text("Average Median");
+            .text("Median");
 
         vis.yAxis = d3.axisLeft()
             .scale(vis.y);
@@ -79,6 +79,9 @@ class ScatterplotVis {
 
         vis.xAxisGroup = vis.svg.append("g")
             .attr("class", "x-axis axis");
+
+        // Append tooltip
+        vis.tooltip = d3.select('body').append('div').attr('class', 'tooltip')
 
         this.wrangleData();
     }
@@ -133,7 +136,29 @@ class ScatterplotVis {
             })
             .style('fill', function(d, i){
                 return vis.majorCategoryColors[d.Major_category];
-            });
+            }).on('mouseover', function(event, d){
+            vis.tooltip
+                .style("opacity", 1)
+                .style("left", event.pageX + 20 + "px")
+                .style("top", event.pageY + "px")
+                .html(`
+         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+            <h5>${d.Major}<h5>
+            <h5>Category: ${d.Major_category}<h5>
+            <h5>Median: ${d.Median}</h5> 
+            <h5>ShareWomen: ${d.ShareWomen}</h5>         
+            <h5>Men: ${d.Men}</h5>            
+            <h5>Women: ${d.Women}</h5>                       
+         </div>`);
+
+        })
+            .on('mouseout', function(){
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
+                    .html(``);
+            })
 
         vis.circles.exit().remove();
 
