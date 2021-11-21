@@ -82,7 +82,6 @@ class ScatterplotVis {
 
         // Append tooltip
         vis.tooltip = d3.select('body').append('div').attr('class', 'tooltip')
-            .attr('id', 'maptooltip')
 
         this.wrangleData();
     }
