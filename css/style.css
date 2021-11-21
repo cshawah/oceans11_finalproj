@@ -5,3 +5,16 @@
 h4 {
     padding-top: 50px;
 }
+
+/*ScatterPlot tooltip */
+.tooltip {
+    position: absolute;
+    text-align: center;
+    font: 12px sans-serif;
+}
+.tooltip h3, h5 {
+    text-align: left;
+}
+.tooltip h5 {
+    font: 14px sans-serif;
+}
