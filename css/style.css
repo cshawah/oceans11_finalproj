@@ -6,3 +6,20 @@ h4 {
     padding-top: 50px;
     text-align: center;
 }
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 250px;
+    height: 50px;
+    padding: 2px;
+    background: lightgray;
+    border-radius: 2px;
+    /*  pointer-events: none;	This line needs to be removed */
+}
+
+.tiptext {
+    font-size: 10pt;
+    padding: 0px;
+    margin: 0px;
+}
