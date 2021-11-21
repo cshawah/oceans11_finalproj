@@ -144,7 +144,7 @@ class ScatterplotVis {
                 .style("top", event.pageY + "px")
                 .html(`
          <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-            <h3>${d.Major}<h3>
+            <h5>${d.Major}<h5>
             <h5>Category: ${d.Major_category}<h5>
             <h5>Median: ${d.Median}</h5> 
             <h5>ShareWomen: ${d.ShareWomen}</h5>         
