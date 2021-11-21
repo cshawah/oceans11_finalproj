@@ -63,13 +63,13 @@ class ScatterplotVis {
         // y-Axis title
         vis.svg.append("text")
             .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 30) + ")")
-            .text("Average Sharewomen");
+            .text("Sharewomen");
 
         // y-Axis title
         vis.svg.append("text")
-            .attr("x", -50)
+            .attr("x", -30)
             .attr("y", -9)
-            .text("Average Median");
+            .text("Median");
 
         vis.yAxis = d3.axisLeft()
             .scale(vis.y);
