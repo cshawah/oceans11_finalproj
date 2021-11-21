@@ -4,17 +4,22 @@
 
 h4 {
     padding-top: 50px;
+    text-align: center;
 }
 
-/*ScatterPlot tooltip */
 .tooltip {
     position: absolute;
     text-align: center;
-    font: 12px sans-serif;
+    width: 250px;
+    height: 50px;
+    padding: 2px;
+    background: lightgray;
+    border-radius: 2px;
+    /*  pointer-events: none;	This line needs to be removed */
 }
-.tooltip h3, h5 {
-    text-align: left;
-}
-.tooltip h5 {
-    font: 14px sans-serif;
+
+.tiptext {
+    font-size: 10pt;
+    padding: 0px;
+    margin: 0px;
 }

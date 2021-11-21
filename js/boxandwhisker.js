@@ -112,8 +112,8 @@ class BoxandWhiskerVis {
     updateVis() {
         let vis = this;
 
-        console.log(vis.displayData);
-        console.log(vis.majors);
+        // console.log(vis.displayData);
+        // console.log(vis.majors);
 
         vis.x.domain(vis.majors);
         vis.y.domain([0, d3.max(vis.displayData, d => d.maxIncome) + 10000])

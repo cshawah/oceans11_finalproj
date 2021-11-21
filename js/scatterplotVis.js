@@ -120,7 +120,7 @@ class ScatterplotVis {
         vis.circles = vis.svg.selectAll("circle")
             .data(vis.displayData);
 
-        console.log(vis.displayData)
+        // console.log(vis.displayData)
 
         vis.circles.enter()
             .append("circle")
