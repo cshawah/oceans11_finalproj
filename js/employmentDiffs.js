@@ -3,6 +3,11 @@ class EmploymentDiff {
     constructor(_parentElement, _data) {
         this.parentElement = _parentElement;
         this.data = _data;
+        this.colors = ["greenyellow", "darkgreen", "darkslateblue",
+            "crimson", "blueviolet", "yellow",
+            "darkblue", "darkred", "darkcyan",
+            "navy", "green", "darkorchid",
+            "orange", "orangered", "indigo", "blue", "darkmagenta"];;
         this.display_data = [];
 
         this.initVis();
@@ -46,18 +51,13 @@ class EmploymentDiff {
 
         vis.majorCategories.sort((a, b) => a.localeCompare(b))
 
-        // Console for sanity
-        // console.log(vis.majorCategories)
-
-        // Get the individual data
         let counterUnemployed = 0
         let counterPartTime = 0
         let counterFullTime = 0
         let counterTotal = 0
-        vis.unemployedCategories = [];
+        vis.unemployedCategories = []
         vis.partTimeCategories = []
         vis.fullTimeCategories = []
-        vis.totalCategories = []
 
 
         vis.majorCategories.forEach(function(element) {
@@ -70,6 +70,10 @@ class EmploymentDiff {
                 }
             })
 
+            counterUnemployed = (counterUnemployed / counterTotal) * 100
+            counterPartTime =  (counterPartTime/counterTotal) * 100
+            counterFullTime =  (counterFullTime/counterTotal) * 100
+
             vis.unemployedCategories.push({
                 counterUnemployed
             })
@@ -77,10 +81,7 @@ class EmploymentDiff {
                 counterPartTime
             })
             vis.fullTimeCategories.push({
-                counterFullTime
-            })
-            vis.totalCategories.push({
-                counterTotal
+               counterFullTime
             })
             counterUnemployed = 0
             counterPartTime = 0
@@ -91,26 +92,21 @@ class EmploymentDiff {
         // Makes sure that the objects pushed into the arrays previously are just numbers
         vis.unemployedCategories = vis.unemployedCategories.map(function(d)
         {
-            return Object.values(d)[0]
+            return Object.values(d)[0].toFixed(2)
         })
         vis.partTimeCategories = vis.partTimeCategories.map(function(d)
         {
-            return Object.values(d)[0]
+            return Object.values(d)[0].toFixed(2)
         })
         vis.fullTimeCategories = vis.fullTimeCategories.map(function(d)
         {
-            return Object.values(d)[0]
-        })
-        vis.totalCategories = vis.totalCategories.map(function(d)
-        {
-            return Object.values(d)[0]
+            return Object.values(d)[0].toFixed(2)
         })
 
         // Console for sanity
         // console.log(vis.unemployedCategories)
         // console.log(vis.partTimeCategories)
         // console.log(vis.fullTimeCategories)
-        // console.log(vis.totalCategories)
 
         // Loads all of this data into the final dataset needed for grouped bar charts
         vis.display_data = {
@@ -118,26 +114,28 @@ class EmploymentDiff {
             datasets: [
                 {
                     label: "Unemployed",
-                    backgroundColor: "#ADD8E6",
+                    //backgroundColor: "#ADD8E6",
+                    backgroundColor: vis.colors,
+                    hoverBackgroundColor: "#ADD8E6",
                     data: vis.unemployedCategories
                 },
                 {
-                    label: "Part-Time",
-                    backgroundColor: "#4c97bd",
+                    label: "Part Time",
+                    //backgroundColor: "#4c97bd",
+                    backgroundColor: vis.colors,
+                    hoverBackgroundColor: "#4c97bd",
                     data: vis.partTimeCategories
                 },
                 {
-                    label: "Full-Time",
-                    backgroundColor: "#1d4b73",
+                    label: "Full Time",
+                    //backgroundColor: "#1d4b73",
+                    backgroundColor: vis.colors,
+                    hoverBackgroundColor: "#1d4b73",
                     data: vis.fullTimeCategories
-                },
-                {
-                    label: "Total",
-                    backgroundColor: "#01243b",
-                    data: vis.totalCategories
                 }
             ]
         }
+        console.log(vis.display_data)
         vis.updateVis()
     }
 
@@ -150,11 +148,16 @@ class EmploymentDiff {
             type: 'bar',
             data: vis.display_data,
             options: {
-
+                legend: {
+                    display: false
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
                             beginAtZero: true,
+                            callback: function (value) {
+                                return (value + '%'); // convert it to percentage
+                            }
                         }
                     }]
                 }
