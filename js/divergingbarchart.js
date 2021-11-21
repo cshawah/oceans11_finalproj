@@ -13,7 +13,7 @@ class DivergingBarChart {
 
         let vis = this;
 
-        vis.margin = {top: 20, right: 20, bottom: 20, left: 60};
+        vis.margin = {top: 0, right: 20, bottom: 20, left: 60};
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right - 200;
         vis.height = 400 - vis.margin.top - vis.margin.bottom;
 
@@ -58,7 +58,7 @@ class DivergingBarChart {
         vis.svg.append("text")
             .attr("x", vis.width - vis.width/2)
             .attr("y", vis.height+10)
-            .text("Percent Difference Between Genders");
+            .text("Gender Difference");
 
         vis.svg.append("text")
             .attr("class", "div-bar-lab")
@@ -166,9 +166,9 @@ class DivergingBarChart {
             .append('rect').attr('class', 'box')
             .attr("y", d => (vis.y(d.majorCat)) - 50) // good
             .attr("x", function(d) { if (d.genderDiff > 0) { return (vis.x(0)) } else { return (vis.x(d.genderDiff)) } })
-            .attr("height", 13) // good
+            .attr("height", 15) // good
             .attr("width", function(d) { if (d.genderDiff > 0) { return (vis.x_women(d.genderDiff)) } else { return (vis.x_men(d.genderDiff)) } })
-            .attr("stroke", "none")
+            .attr("stroke", "black")
             .style("fill", d => vis.majorCategoryColors[d.majorCat]);
 
         vis.svg.select(".x-axis").call(vis.xAxis)

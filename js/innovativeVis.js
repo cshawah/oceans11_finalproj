@@ -7,10 +7,11 @@
 
 class InnovativeVis {
 
-    constructor(_parentElement, _data, _majorCategoryColors) {
+    constructor(_parentElement, _data, _majorCategoryColors, _n) {
         this.parentElement = _parentElement;
         this.data = _data;
         this.majorCategoryColors = _majorCategoryColors;
+        this.n = _n;
         this.displayData = [];
 
         this.initVis();
@@ -23,10 +24,10 @@ class InnovativeVis {
     initVis() {
         let vis = this;
 
-        vis.margin = { top: 40, right: 0, bottom: 200, left: 60 };
+        vis.margin = { top: 0, right: 0, bottom: 0, left: 60 };
 
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right,
-            vis.height = 800 - vis.margin.top - vis.margin.bottom;
+        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
+        vis.height = 400 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -89,9 +90,57 @@ class InnovativeVis {
                 Category: category,
                 Total: vis.categoryStats[category].Total,
                 Women: vis.categoryStats[category].Women,
-                Men: vis.categoryStats[category].Men
-            });
+                Men: vis.categoryStats[category].Men,
+                IntTotal: Math.round((vis.categoryStats[category].Total/overallTotal) * 100),
+                IntWomen: Math.round((vis.categoryStats[category].Women/overallWomen) * 100 + 0.182),
+                IntMen: Math.round((vis.categoryStats[category].Men/overallMen) * 100 + 0.05)
+            })
         });
+
+        let test = 0;
+
+        vis.dotsTotal = [];
+        vis.dotsMen = [];
+        vis.dotsWomen = [];
+        let counterTotal = 0;
+        let counterMen = 0;
+        let counterWomen = 0;
+
+        vis.displayData.forEach(cat => {
+            for (let i = 0; i < cat.IntTotal; i++) {
+               vis.dotsTotal.push({
+                   Index: counterTotal,
+                   MajorCat: cat.Category
+               });
+                counterTotal += 1;
+            }
+            for (let i = 0; i < cat.IntWomen; i++) {
+                vis.dotsWomen.push({
+                    Index: counterWomen,
+                    MajorCat: cat.Category
+                });
+                counterWomen += 1;
+            }
+            for (let i = 0; i < cat.IntMen; i++) {
+                vis.dotsMen.push({
+                    Index: counterMen,
+                    MajorCat: cat.Category
+                });
+                counterMen += 1;
+            }
+        });
+
+        // console.log(vis.dotsTotal);
+        // console.log(vis.dotsWomen);
+        // console.log(vis.dotsMen);
+
+        vis.allData = [];
+
+        vis.allData[0] = vis.dotsTotal;
+        vis.allData[1] = vis.dotsMen;
+        vis.allData[2] = vis.dotsWomen;
+
+        console.log(vis.allData);
 
         // Update the visualization
         vis.updateVis();
@@ -103,20 +152,34 @@ class InnovativeVis {
      */
     updateVis() {
         let vis = this;
-        console.log(vis.displayData);
+
+        //vis.dotsTotal, vis.dotsWomen, vis.dotsMen
+
+        vis.circles = vis.svg.selectAll('circle.total')
+            .data(vis.allData[vis.n], d => d.Index);
+
+        vis.circles.exit().remove();
+
+        vis.circles.enter()
+            .append('circle').attr('class', 'total')
+            .attr("cx", d => ((d.Index % 10)*30))
+            .attr("cy", d => ((Math.floor(d.Index/10)+1) * 30))
+            .attr("r", 13) // good
+            .attr("stroke", "black")
+            .style("fill", d => vis.majorCategoryColors[d.MajorCat]);
 
         // TODO: calculate and draw number of circles per category, placing them in the correct spot using the scales
         // Math.floor(category.Total / overallTotal * 100); // code to calculate number of circles to draw for each category (when on the overall button)
     }
 
     // function to abbreviate major name so it fits on the axis
-    abbrevMajor(major) {
-        let abbreviated = major;
-        abbreviated = abbreviated.includes("ENGINEERING") ? abbreviated.replace("ENGINEERING", "ENG.") : abbreviated;
-        abbreviated = abbreviated.includes("MANAGEMENT") ? abbreviated.replace("MANAGEMENT", "MGMT.") : abbreviated;
-        abbreviated = abbreviated.includes("MISCELLANEOUS") ? abbreviated.replace("MISCELLANEOUS", "MISC.") : abbreviated;
-        return abbreviated;
-    }
+    // abbrevMajor(major) {
+    //     let abbreviated = major;
+    //     abbreviated = abbreviated.includes("ENGINEERING") ? abbreviated.replace("ENGINEERING", "ENG.") : abbreviated;
+    //     abbreviated = abbreviated.includes("MANAGEMENT") ? abbreviated.replace("MANAGEMENT", "MGMT.") : abbreviated;
+    //     abbreviated = abbreviated.includes("MISCELLANEOUS") ? abbreviated.replace("MISCELLANEOUS", "MISC.") : abbreviated;
+    //     return abbreviated;
+    // }
 }
 
 
