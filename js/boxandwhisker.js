@@ -93,7 +93,7 @@ class BoxandWhiskerVis {
 
         // TODO: make sure values for min and max make sense, and majors without all the data are excluded
         vis.displayData.forEach(element => {
-            element.Major = vis.abbrevMajor(element.Major);
+            element.Major = vis.abbrevMajor(element.Major); // abbreviates the major so it fits on the axis
             element.interQuantileRange = element["P75th"] - element["P25th"];
             element.minIncome = element["P25th"] - 1.5 * element.interQuantileRange;
             element.minIncome  = element.minIncome > 0 ? element.minIncome : 0;
@@ -122,19 +122,19 @@ class BoxandWhiskerVis {
 
         // vertical lines of each box
         vis.verticalLines = vis.svg.selectAll('.vertical-line')
-            .data(vis.displayData, d => d.Major);
+            .data([]); // clears the data first so everything is redrawn when a new filter is selected
         // boxes
         vis.boxes = vis.svg.selectAll('.box')
-            .data(vis.displayData, d => d.Major);
+            .data([]);
         // median lines of each box
         vis.medianLines = vis.svg.selectAll('.median-line')
-            .data(vis.displayData, d => d.Major);
+            .data([]);
         // minIncome lines of each box
         vis.minLines = vis.svg.selectAll('.min-line')
-            .data(vis.displayData, d => d.Major);
+            .data([]);
         // maxIncome lines of each box
         vis.maxLines = vis.svg.selectAll('.max-line')
-            .data(vis.displayData, d => d.Major);
+            .data([]);
 
         vis.verticalLines.exit().remove();
         vis.boxes.exit().remove();
@@ -142,46 +142,51 @@ class BoxandWhiskerVis {
         vis.minLines.exit().remove();
         vis.maxLines.exit().remove();
 
-        vis.verticalLines.enter()
+        vis.verticalLines.data(vis.displayData, d => d.Major)
+            .enter()
             .append('line').attr('class', 'vertical-line')
             .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2)
             .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2)
             .attr("y1", d => vis.y(d.minIncome))
             .attr("y2", d => vis.y(d.maxIncome))
-            .attr("stroke", "black")
+            .attr("stroke", "black");
 
-        vis.boxes.enter()
+        vis.boxes.data(vis.displayData, d => d.Major)
+            .enter()
             .append('rect').attr('class', 'box')
             .attr("x", d => (vis.x(d.Major) - boxWidth/2) + vis.width/vis.majors.length/2)
             .attr("y", d => vis.y(d["P75th"]))
             .attr("height", d => vis.y(d["P25th"]) - vis.y(d["P75th"]))
             .attr("width", boxWidth)
             .attr("stroke", "black")
-            .style("fill", d => vis.majorCategoryColors[d.Major_category]) // TODO: create a legend for the category colors
+            .style("fill", d => vis.majorCategoryColors[d.Major_category]);
 
-        vis.medianLines.enter()
+        vis.medianLines.data(vis.displayData, d => d.Major)
+            .enter()
             .append('line').attr('class', 'median-line')
             .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
             .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
             .attr("y1", d => vis.y(d.Median))
             .attr("y2", d => vis.y(d.Median))
-            .attr("stroke", "black")
+            .attr("stroke", "black");
 
-        vis.minLines.enter()
+        vis.minLines.data(vis.displayData, d => d.Major)
+            .enter()
             .append('line').attr('class', 'min-line')
             .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
             .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
             .attr("y1", d => vis.y(d.minIncome))
             .attr("y2", d => vis.y(d.minIncome))
-            .attr("stroke", "black")
+            .attr("stroke", "black");
 
-        vis.maxLines.enter()
+        vis.maxLines.data(vis.displayData, d => d.Major)
+            .enter()
             .append('line').attr('class', 'max-line')
             .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
             .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
             .attr("y1", d => vis.y(d.maxIncome))
             .attr("y2", d => vis.y(d.maxIncome))
-            .attr("stroke", "black")
+            .attr("stroke", "black");
 
         vis.svg.select(".x-axis").call(vis.xAxis)
             .selectAll("text")
