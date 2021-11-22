@@ -172,7 +172,7 @@ class DivergingBarChart {
             .append('rect').attr('class', 'box')
             .attr("y", d => (vis.y(d.majorCat)) - 50) // good
             .attr("x", function(d) { if (d.genderDiff > 0) { return (vis.x(0)) } else { return (vis.x(d.genderDiff)) } })
-            .attr("height", 15) // good
+            .attr("height", 20) // good
             .attr("width", function(d) { if (d.genderDiff > 0) { return (vis.x_women(d.genderDiff)) } else { return (vis.x_men(d.genderDiff)) } })
             .attr("stroke", "black")
             .style("fill", d => vis.majorCategoryColors[d.majorCat])
