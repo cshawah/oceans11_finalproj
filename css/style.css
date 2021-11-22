@@ -40,3 +40,9 @@ p {
     font-family: 'Asap', sans-serif;
     text-align: left;
 }
+
+h5 {
+    font-family: 'Space Grotesk', sans-serif;
+    color: gray;
+    font-size: 13pt;
+}
