@@ -48,6 +48,11 @@ class BoxandWhiskerVis {
         vis.yAxis = d3.axisLeft()
             .scale(vis.y);
 
+        // append tooltip
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'boxTooltip')
+
         vis.svg.append("g")
             .attr("class", "x-axis axis")
             .attr("transform", "translate(0," + vis.height + ")");
@@ -93,11 +98,14 @@ class BoxandWhiskerVis {
 
         // TODO: make sure values for min and max make sense, and majors without all the data are excluded
         vis.displayData.forEach(element => {
+            element.fullMajor = element.Major; // stores the unabbreviated name of the major for the tooltip
             element.Major = vis.abbrevMajor(element.Major); // abbreviates the major so it fits on the axis
             element.interQuantileRange = element["P75th"] - element["P25th"];
+            // not using the below metrics because I'm worried they're misleading since we only have 1 data point per major
             element.minIncome = element["P25th"] - 1.5 * element.interQuantileRange;
             element.minIncome  = element.minIncome > 0 ? element.minIncome : 0;
             element.maxIncome = element["P75th"] + 1.5 * element.interQuantileRange;
+
             vis.majors.push(element.Major);
         });
 
@@ -116,7 +124,7 @@ class BoxandWhiskerVis {
         // console.log(vis.majors);
 
         vis.x.domain(vis.majors);
-        vis.y.domain([0, d3.max(vis.displayData, d => d.maxIncome) + 10000])
+        vis.y.domain([0, d3.max(vis.displayData, d => d["P75th"]) + 10000])
 
         let boxWidth = vis.width / vis.majors.length - 10;
 
@@ -142,14 +150,14 @@ class BoxandWhiskerVis {
         vis.minLines.exit().remove();
         vis.maxLines.exit().remove();
 
-        vis.verticalLines.data(vis.displayData, d => d.Major)
-            .enter()
-            .append('line').attr('class', 'vertical-line')
-            .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2)
-            .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2)
-            .attr("y1", d => vis.y(d.minIncome))
-            .attr("y2", d => vis.y(d.maxIncome))
-            .attr("stroke", "black");
+        // vis.verticalLines.data(vis.displayData, d => d.Major)
+        //     .enter()
+        //     .append('line').attr('class', 'vertical-line')
+        //     .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2)
+        //     .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2)
+        //     .attr("y1", d => vis.y(d.minIncome))
+        //     .attr("y2", d => vis.y(d.maxIncome))
+        //     .attr("stroke", "black");
 
         vis.boxes.data(vis.displayData, d => d.Major)
             .enter()
@@ -159,7 +167,28 @@ class BoxandWhiskerVis {
             .attr("height", d => vis.y(d["P25th"]) - vis.y(d["P75th"]))
             .attr("width", boxWidth)
             .attr("stroke", "black")
-            .style("fill", d => vis.majorCategoryColors[d.Major_category]);
+            .style("fill", d => vis.majorCategoryColors[d.Major_category])
+            .on('mouseover', function(event, d) {
+                vis.tooltip
+                    .style("opacity", 1)
+                    .style("left", event.pageX + 10 + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`
+                         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                            <h5>${d.fullMajor}<h5> 
+                            <h5>Category: ${d.Major_category}<h5>
+                            <h5>Median Income: $${d.Median.toLocaleString("en-US")}</h5> 
+                            <h5>25th Percentile: $${d["P25th"].toLocaleString("en-US")}</h5> 
+                            <h5>75th Percentile: $${d["P75th"].toLocaleString("en-US")}</h5>                       
+                         </div>`);
+            })
+            .on('mouseout', function(){
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
+                    .html(``);
+            });
 
         vis.medianLines.data(vis.displayData, d => d.Major)
             .enter()
@@ -170,23 +199,23 @@ class BoxandWhiskerVis {
             .attr("y2", d => vis.y(d.Median))
             .attr("stroke", "black");
 
-        vis.minLines.data(vis.displayData, d => d.Major)
-            .enter()
-            .append('line').attr('class', 'min-line')
-            .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
-            .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
-            .attr("y1", d => vis.y(d.minIncome))
-            .attr("y2", d => vis.y(d.minIncome))
-            .attr("stroke", "black");
-
-        vis.maxLines.data(vis.displayData, d => d.Major)
-            .enter()
-            .append('line').attr('class', 'max-line')
-            .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
-            .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
-            .attr("y1", d => vis.y(d.maxIncome))
-            .attr("y2", d => vis.y(d.maxIncome))
-            .attr("stroke", "black");
+        // vis.minLines.data(vis.displayData, d => d.Major)
+        //     .enter()
+        //     .append('line').attr('class', 'min-line')
+        //     .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
+        //     .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
+        //     .attr("y1", d => vis.y(d.minIncome))
+        //     .attr("y2", d => vis.y(d.minIncome))
+        //     .attr("stroke", "black");
+        //
+        // vis.maxLines.data(vis.displayData, d => d.Major)
+        //     .enter()
+        //     .append('line').attr('class', 'max-line')
+        //     .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
+        //     .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
+        //     .attr("y1", d => vis.y(d.maxIncome))
+        //     .attr("y2", d => vis.y(d.maxIncome))
+        //     .attr("stroke", "black");
 
         vis.svg.select(".x-axis").call(vis.xAxis)
             .selectAll("text")

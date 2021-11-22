@@ -7,12 +7,13 @@ h4 {
     text-align: center;
 }
 
+.filterDropdown {
+    height: 35px;
+}
+
 .tooltip {
     position: absolute;
     text-align: center;
-    width: 250px;
-    height: 50px;
-    padding: 2px;
     background: lightgray;
     border-radius: 2px;
     /*  pointer-events: none;	This line needs to be removed */
