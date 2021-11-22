@@ -132,11 +132,13 @@ class ScatterplotVis {
                 return vis.y(d.Median)
             })
             .attr("r", function(d){
-                return 5
+                return 8
             })
             .style('fill', function(d, i){
                 return vis.majorCategoryColors[d.Major_category];
-            }).on('mouseover', function(event, d) {
+            })
+            .style('opacity', 0.8)
+            .on('mouseover', function(event, d) {
                 vis.tooltip
                     .style("opacity", 1)
                     .style("left", event.pageX + 20 + "px")
