@@ -45,6 +45,7 @@ function createVis(data) {
         "blue", "darkslateblue", "darkblue", "navy",
         "indigo", "blueviolet", "darkorchid", "darkmagenta"]; // defined 16 colors (ROYGBIV)
     let index = 0;
+    // TODO: make sure the colors are in ROYGBIV order by alphabetical order for the categories
     data.forEach(element => {
         if (!Object.keys(majorCategoryColors).includes(element["Major_category"]) && majorCategoryColors.length < 16) {
             majorCategoryColors[element["Major_category"]] = colors[index];
@@ -56,7 +57,7 @@ function createVis(data) {
 
     boxandwhisker = new BoxandWhiskerVis("salary_diffs", data, majorCategoryColors);
     scatterplot = new ScatterplotVis('gender_salary_bars', data, majorCategoryColors);
-    employmentDiff = new EmploymentDiff("employment_diffs", data)
+    employmentDiff = new EmploymentDiff("employment_diffs", data); // TODO: eventually have this take in the colors from here
     divergingbarchart = new DivergingBarChart('gender_diffs_bars', data, majorCategoryColors);
     innovativeVis_total = new InnovativeVis("popular_majors_t", data, majorCategoryColors, 0);
     innovativeVis_men = new InnovativeVis("popular_majors_m", data, majorCategoryColors, 1);

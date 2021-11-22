@@ -7,7 +7,7 @@ class EmploymentDiff {
             "crimson", "blueviolet", "yellow",
             "darkblue", "darkred", "darkcyan",
             "navy", "green", "darkorchid",
-            "orange", "orangered", "indigo", "blue", "darkmagenta"];;
+            "orange", "orangered", "indigo", "blue", "darkmagenta"];
         this.display_data = [];
 
         this.initVis();

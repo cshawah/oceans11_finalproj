@@ -14,8 +14,9 @@ class DivergingBarChart {
         let vis = this;
 
         vis.margin = {top: 0, right: 20, bottom: 20, left: 60};
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right - 200;
-        vis.height = 400 - vis.margin.top - vis.margin.bottom;
+        vis.padding = {top: 0, right: 0, bottom: 0, left: 125};
+        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
+        vis.height = 500 - vis.margin.top - vis.margin.bottom;
 
         // init drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -26,15 +27,15 @@ class DivergingBarChart {
 
         // Scales and axes
         vis.x = d3.scaleLinear()
-            .range([250, vis.width])
+            .range([vis.padding.left, vis.width])
             .domain([-50, 50]);
 
         vis.x_women = d3.scaleLinear()
-            .range([0, (vis.width-250)/2])
+            .range([0, (vis.width-vis.padding.left)/2])
             .domain([0, 50]);
 
         vis.x_men = d3.scaleLinear()
-            .range([0, (vis.width-250)/2])
+            .range([0, (vis.width-vis.padding.left)/2])
             .domain([0, -50]);
 
         vis.y = d3.scaleBand()
@@ -52,7 +53,7 @@ class DivergingBarChart {
 
         vis.svg.append("g")
             .attr("class", "y-axis axis")
-            .attr("transform", "translate(" + 250 + "," + -50 + ")"); //!!!!
+            .attr("transform", "translate(" + vis.padding.left + "," + -50 + ")"); //!!!!
 
         // Axis title
         vis.svg.append("text")
@@ -68,7 +69,7 @@ class DivergingBarChart {
 
         vis.svg.append("text")
             .attr("class", "div-bar-lab")
-            .attr("x", vis.width-100)
+            .attr("x", vis.width*3/4)
             .attr("y", vis.height+10)
             .text("More Women");
 
@@ -185,7 +186,7 @@ class DivergingBarChart {
                     .html(`
                              <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
                                  <h5>${d.majorCat}</h5>
-                                 <h5>Share of Women: ${Math.round(d.shareWomen*100)/100}%</h5>
+                                 <h5>Percentage of Women: ${Math.round(d.shareWomen*100)/100}%</h5>
                              </div>`)})
             .on('mouseout', function(event, d){
                 d3.select(this)

@@ -98,7 +98,7 @@ class BoxandWhiskerVis {
 
         // TODO: make sure values for min and max make sense, and majors without all the data are excluded
         vis.displayData.forEach(element => {
-            element.fullMajor = element.Major; // stores the unabbreviated name of the major for the tooltip
+            element.fullMajor = element.Major; // TODO: fix this so that it doesn't get abbreviated second time thru
             element.Major = vis.abbrevMajor(element.Major); // abbreviates the major so it fits on the axis
             element.interQuantileRange = element["P75th"] - element["P25th"];
             // not using the below metrics because I'm worried they're misleading since we only have 1 data point per major
