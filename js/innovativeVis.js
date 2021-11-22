@@ -51,6 +51,10 @@ class InnovativeVis {
         vis.svg.append("g")
             .attr("class", "y-axis axis");
 
+        vis.tooltip = d3.select("body").append('div')
+            .attr('class', "tooltip")
+            .attr('id', 'barTooltip');
+
         // (Filter, aggregate, modify data)
         vis.wrangleData();
     }
@@ -166,7 +170,27 @@ class InnovativeVis {
             .attr("cy", d => ((Math.floor(d.Index/10)+1) * 30))
             .attr("r", 13) // good
             .attr("stroke", "black")
-            .style("fill", d => vis.majorCategoryColors[d.MajorCat]);
+            .style("fill", d => vis.majorCategoryColors[d.MajorCat])
+            .on('mouseover', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '2px')
+                vis.tooltip
+                    .style("opacity", 1)
+                    .style("left", event.pageX + 20 + "px")
+                    .style("top", event.pageY + "px")
+                    .html(`
+                             <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
+                                 <h5>${d.MajorCat}</h5>
+                             </div>`)})
+            .on('mouseout', function(event, d){
+                d3.select(this)
+                    .attr('stroke-width', '1px')
+                vis.tooltip
+                    .style("opacity", 0)
+                    .style("left", 0)
+                    .style("top", 0)
+                    .html(``);
+            })
 
         // TODO: calculate and draw number of circles per category, placing them in the correct spot using the scales
         // Math.floor(category.Total / overallTotal * 100); // code to calculate number of circles to draw for each category (when on the overall button)

@@ -31,3 +31,11 @@ h4 {
 .tooltip h5 {
     font: 14px sans-serif;
 }
+
+h1, h2, h4 {
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+p {
+    font-family: 'Asap', sans-serif;
+}
