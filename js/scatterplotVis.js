@@ -63,13 +63,13 @@ class ScatterplotVis {
         // y-Axis title
         vis.svg.append("text")
             .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 30) + ")")
-            .text("Sharewomen");
+            .text("Percentage of Women");
 
         // y-Axis title
         vis.svg.append("text")
-            .attr("x", -30)
+            .attr("x", -50)
             .attr("y", -9)
-            .text("Median");
+            .text("Median Income");
 
         vis.yAxis = d3.axisLeft()
             .scale(vis.y);
@@ -145,10 +145,10 @@ class ScatterplotVis {
          <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
             <h5>${d.Major}<h5>
             <h5>Category: ${d.Major_category}<h5>
-            <h5>Median: ${d.Median}</h5> 
-            <h5>ShareWomen: ${d.ShareWomen}</h5>         
-            <h5>Men: ${d.Men}</h5>            
-            <h5>Women: ${d.Women}</h5>                       
+            <h5>Median Income: $${d.Median}</h5> 
+            <h5>Percentage of Women: ${Math.floor(d.ShareWomen * 100)}%</h5>         
+            <!-- <h5>Men: ${d.Men}</h5>            
+            <h5>Women: ${d.Women}</h5> -->                     
          </div>`);
 
         })
