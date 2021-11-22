@@ -98,15 +98,15 @@ class BoxandWhiskerVis {
 
         // TODO: make sure values for min and max make sense, and majors without all the data are excluded
         vis.displayData.forEach(element => {
-            element.fullMajor = element.Major; // TODO: fix this so that it doesn't get abbreviated second time thru
-            element.Major = vis.abbrevMajor(element.Major); // abbreviates the major so it fits on the axis
+            element.fullMajor = element.Major;
+            element.abbrevMajor = vis.abbrevMajor(element.Major); // abbreviates the major so it fits on the axis
             element.interQuantileRange = element["P75th"] - element["P25th"];
             // not using the below metrics because I'm worried they're misleading since we only have 1 data point per major
             element.minIncome = element["P25th"] - 1.5 * element.interQuantileRange;
             element.minIncome  = element.minIncome > 0 ? element.minIncome : 0;
             element.maxIncome = element["P75th"] + 1.5 * element.interQuantileRange;
 
-            vis.majors.push(element.Major);
+            vis.majors.push(element.abbrevMajor);
         });
 
         // Update the visualization
@@ -159,10 +159,10 @@ class BoxandWhiskerVis {
         //     .attr("y2", d => vis.y(d.maxIncome))
         //     .attr("stroke", "black");
 
-        vis.boxes.data(vis.displayData, d => d.Major)
+        vis.boxes.data(vis.displayData, d => d.abbrevMajor)
             .enter()
             .append('rect').attr('class', 'box')
-            .attr("x", d => (vis.x(d.Major) - boxWidth/2) + vis.width/vis.majors.length/2)
+            .attr("x", d => (vis.x(d.abbrevMajor) - boxWidth/2) + vis.width/vis.majors.length/2)
             .attr("y", d => vis.y(d["P75th"]))
             .attr("height", d => vis.y(d["P25th"]) - vis.y(d["P75th"]))
             .attr("width", boxWidth)
@@ -190,11 +190,11 @@ class BoxandWhiskerVis {
                     .html(``);
             });
 
-        vis.medianLines.data(vis.displayData, d => d.Major)
+        vis.medianLines.data(vis.displayData, d => d.abbrevMajor)
             .enter()
             .append('line').attr('class', 'median-line')
-            .attr("x1", d => vis.x(d.Major) + vis.width/vis.majors.length/2 - boxWidth/2)
-            .attr("x2", d => vis.x(d.Major) + vis.width/vis.majors.length/2 + boxWidth/2)
+            .attr("x1", d => vis.x(d.abbrevMajor) + vis.width/vis.majors.length/2 - boxWidth/2)
+            .attr("x2", d => vis.x(d.abbrevMajor) + vis.width/vis.majors.length/2 + boxWidth/2)
             .attr("y1", d => vis.y(d.Median))
             .attr("y2", d => vis.y(d.Median))
             .attr("stroke", "black");
