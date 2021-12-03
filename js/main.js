@@ -40,12 +40,12 @@ Promise.all(promises)
 function createVis(data) {
     console.log(data);
     let majorCategoryColors = [];
-    let colors = ["darkred", "crimson", "orangered", "orange", "yellow",
-        "greenyellow", "green", "darkgreen", "darkcyan",
-        "blue", "darkslateblue", "darkblue", "navy",
-        "indigo", "blueviolet", "darkorchid", "darkmagenta"]; // defined 16 colors (ROYGBIV)
+    let colors = ["darkred", "crimson", "orangered", "orange",
+        "yellow", "greenyellow", "springgreen", "green",
+        "cyan", "lightskyblue", "blue", "darkslateblue",
+        "darkblue", "indigo", "blueviolet", "orchid"]; // defined 16 colors (ROYGBIV)
+    // TODO: fix colors on the grouped bar chart -> new colors are springgreen, cyan, lightskyblue, and orchid
     let index = 0;
-    // TODO: make sure the colors are in ROYGBIV order by alphabetical order for the categories
     data.forEach(element => {
         if (!Object.keys(majorCategoryColors).includes(element["Major_category"]) && majorCategoryColors.length < 16) {
             majorCategoryColors[element["Major_category"]] = colors[index];
