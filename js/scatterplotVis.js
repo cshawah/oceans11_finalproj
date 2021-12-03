@@ -137,7 +137,7 @@ class ScatterplotVis {
             .style('fill', function(d, i){
                 return vis.majorCategoryColors[d.Major_category];
             })
-            .style('stroke', "black")
+            .style('stroke', "#000")
             .style('opacity', 0.8)
             .on('mouseover', function(event, d) {
                 vis.tooltip
