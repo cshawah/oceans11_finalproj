@@ -106,43 +106,54 @@ class InnovativeVis {
         vis.dotsTotal = [];
         vis.dotsMen = [];
         vis.dotsWomen = [];
+        vis.dotsRandom = [];
         let counterTotal = 0;
         let counterMen = 0;
         let counterWomen = 0;
+        let counterRandom = 0;
 
         vis.displayData.forEach(cat => {
             for (let i = 0; i < cat.IntTotal; i++) {
                vis.dotsTotal.push({
                    Index: counterTotal,
-                   MajorCat: cat.Category
+                   MajorCat: cat.Category,
+                   Gender: (i <= cat.Men/overallTotal * 100 ? "M":"F")
                });
                 counterTotal += 1;
+            }
+            for (let i = 0; i < cat.IntTotal; i++) {
+                vis.dotsRandom.push({
+                    Index: counterTotal,
+                    MajorCat: cat.Category,
+                    Random: Math.random(),
+                    Gender: (i <= cat.Men/overallTotal * 100 ? "M":"F")
+                });
+                counterRandom += 1;
             }
             for (let i = 0; i < cat.IntWomen; i++) {
                 vis.dotsWomen.push({
                     Index: counterWomen,
-                    MajorCat: cat.Category
+                    MajorCat: cat.Category,
+                    Gender: "F"
                 });
                 counterWomen += 1;
             }
             for (let i = 0; i < cat.IntMen; i++) {
                 vis.dotsMen.push({
                     Index: counterMen,
-                    MajorCat: cat.Category
+                    MajorCat: cat.Category,
+                    Gender: "M"
                 });
                 counterMen += 1;
             }
         });
-
-        // console.log(vis.dotsTotal);
-        // console.log(vis.dotsWomen);
-        // console.log(vis.dotsMen);
 
         vis.allData = [];
 
         vis.allData[0] = vis.dotsTotal;
         vis.allData[1] = vis.dotsMen;
         vis.allData[2] = vis.dotsWomen;
+        vis.allData[3] = vis.dotsRandom.sort((a, b) => a.Random - b.Random);
 
         console.log(vis.allData);
 
@@ -166,8 +177,8 @@ class InnovativeVis {
 
         vis.circles.enter()
             .append('circle').attr('class', 'total')
-            .attr("cx", d => ((d.Index % 10)*30))
-            .attr("cy", d => ((Math.floor(d.Index/10)+1) * 30))
+            .attr("cx", (d,i) => ((i % 10)*30))
+            .attr("cy", (d,i) => ((Math.floor(i/10)+1) * 30))
             .attr("r", 13) // good
             .attr("stroke", "black")
             .style("fill", d => vis.majorCategoryColors[d.MajorCat])

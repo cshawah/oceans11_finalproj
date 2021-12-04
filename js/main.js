@@ -59,7 +59,7 @@ function createVis(data) {
     scatterplot = new ScatterplotVis('gender_salary_bars', data, majorCategoryColors);
     employmentDiff = new EmploymentDiff("employment_diffs", data); // TODO: eventually have this take in the colors from here
     divergingbarchart = new DivergingBarChart('gender_diffs_bars', data, majorCategoryColors);
-    innovativeVis_total = new InnovativeVis("popular_majors_t", data, majorCategoryColors, 0);
+    innovativeVis_total = new InnovativeVis("popular_majors_t", data, majorCategoryColors, 3);
     innovativeVis_men = new InnovativeVis("popular_majors_m", data, majorCategoryColors, 1);
     innovativeVis_women = new InnovativeVis("popular_majors_w", data, majorCategoryColors, 2);
 }
