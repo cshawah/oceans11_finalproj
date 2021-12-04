@@ -70,10 +70,14 @@
 		</div>
 
 		<div class="row">
-			<div class="col col-md-12">
-				<h4>Top Median Incomes by Majors and Major Categories</h4>
+			<h4>Recent Graduate Income Ranges</h4>
+			<div class="col col-md-6">
+				<h5 style="text-align: center">Ranges Across Categories</h5>
+			</div>
+			<div class="col col-md-6">
+				<h5 style="text-align: center">Ranges Across Majors</h5>
 				<select id='selectBox' class="filterDropdown" onchange="updateVisualization()">
-					<option value="Overall" selected>Overall</option>
+					<option value="Overall" selected>Overall (Top 20)</option>
 					<option value="Agriculture & Natural Resources">Agriculture & Natural Resources</option>
 					<option value="Arts">Arts</option>
 					<option value="Biology & Life Science">Biology & Life Science</option>
@@ -91,6 +95,11 @@
 					<option value="Psychology & Social Work">Psychology & Social Work</option>
 					<option value="Social Science">Social Science</option>
 				</select>
+			</div>
+			<div class="col col-md-6">
+				<div id="salary_diffs_categories"></div>
+			</div>
+			<div class="col col-md-6">
 				<div id="salary_diffs"></div>
 			</div>
 			<p>Median incomes of recent graduates vary by quite a bit by major, and even by major category. Overall, nearly all of the majors with the top 20 highest median incomes are in the Engineering category. However, this category has historically fewer women than other major categories. Categories such as Education, with higher shares of women, have much lower post-graduation median incomes.</p>
