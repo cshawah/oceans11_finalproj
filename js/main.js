@@ -2,7 +2,7 @@
 let dateFormatter = d3.timeFormat("%Y-%m-%d");
 let dateParser = d3.timeParse("%Y-%m-%d");
 
-let boxandwhisker, scatterplot, employmentDiff, divergingbarchart, innovativeVis_total, innovativeVis_men, innovativeVis_women;
+let boxandwhisker, boxandwhiskercategories, scatterplot, employmentDiff, divergingbarchart, innovativeVis_total, innovativeVis_men, innovativeVis_women;
 
 // (1) Load data with promises
 let promises = [
@@ -52,16 +52,16 @@ function createVis(data) {
             index+=1;
         }
     });
-
     console.log(majorCategoryColors);
 
-    boxandwhisker = new BoxandWhiskerVis("salary_diffs", data, majorCategoryColors);
-    scatterplot = new ScatterplotVis('gender_salary_bars', data, majorCategoryColors);
-    employmentDiff = new EmploymentDiff("employment_diffs", data); // TODO: eventually have this take in the colors from here
-    divergingbarchart = new DivergingBarChart('gender_diffs_bars', data, majorCategoryColors);
-    innovativeVis_total = new InnovativeVis("popular_majors_t", data, majorCategoryColors, 3);
+    innovativeVis_total = new InnovativeVis("popular_majors_t", data, majorCategoryColors, 0);
     innovativeVis_men = new InnovativeVis("popular_majors_m", data, majorCategoryColors, 1);
     innovativeVis_women = new InnovativeVis("popular_majors_w", data, majorCategoryColors, 2);
+    divergingbarchart = new DivergingBarChart('gender_diffs_bars', data, majorCategoryColors);
+    employmentDiff = new EmploymentDiff("employment_diffs", data);
+    boxandwhiskercategories = new BoxandWhiskerVis("salary_diffs_categories", data, majorCategoryColors, true);
+    boxandwhisker = new BoxandWhiskerVis("salary_diffs", data, majorCategoryColors);
+    scatterplot = new ScatterplotVis('gender_salary_bars', data, majorCategoryColors);
 }
 
 function updateVisualization() {
