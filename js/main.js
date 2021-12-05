@@ -68,10 +68,6 @@ function updateBoxandWhisker() {
     boxandwhisker.wrangleData();
 }
 
-function updateScatterPlot() {
-    scatterplot.wrangleData();
-}
-
 function updateInnovVis() {
     innovativeVis_total.updateVis();
 }
