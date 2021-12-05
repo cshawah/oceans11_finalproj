@@ -44,7 +44,8 @@ class BoxandWhiskerVis {
             .range([vis.height, 0]);
 
         vis.xAxis = d3.axisBottom()
-            .scale(vis.x);
+            .scale(vis.x)
+            .tickFormat(d => d.toUpperCase());
 
         vis.yAxis = d3.axisLeft()
             .scale(vis.y);
