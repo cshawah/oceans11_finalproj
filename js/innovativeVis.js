@@ -37,7 +37,6 @@ class InnovativeVis {
             .append("g")
             .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-        // TODO: fix these so scales form a 10 x 10 matrix, and make sure these are ghost axes (don't actually show up)
         // Scales and axes
         vis.x = d3.scaleBand()
             .range([0, vis.width]);
@@ -65,7 +64,6 @@ class InnovativeVis {
      */
     wrangleData() {
         let vis = this;
-        // TODO: make filter buttons on html and then get value of which filter button was selected (all, men, women)
 
         vis.categoryStats = {};
         let overallTotal = 0;
@@ -185,7 +183,6 @@ class InnovativeVis {
             vis.n = vis.selection;
         }
 
-
         var symbol = d3.symbol().type(function(d) {
             if(d.Gender === 'M') {
                 return d3.symbolSquare;
@@ -194,16 +191,15 @@ class InnovativeVis {
             }
         }).size(500);
 
+        // I'm doing this wrong, please help!!!!
 
         vis.svg.selectAll('path.total')
             .transition(500)
             .style("opacity", 0)
             .remove();
 
-        vis.symbols = vis.svg.selectAll('total')
+        vis.symbols = vis.svg.selectAll()
             .data(vis.allData[vis.n], d => d.Index);
-
-        //vis.symbols.exit().remove();
 
         vis.symbols.exit().remove();
 
@@ -240,19 +236,8 @@ class InnovativeVis {
             .duration(1000)
             .style("opacity", 1)
 
-
-        // TODO: calculate and draw number of circles per category, placing them in the correct spot using the scales
-        // Math.floor(category.Total / overallTotal * 100); // code to calculate number of circles to draw for each category (when on the overall button)
     }
 
-    // function to abbreviate major name so it fits on the axis
-    // abbrevMajor(major) {
-    //     let abbreviated = major;
-    //     abbreviated = abbreviated.includes("ENGINEERING") ? abbreviated.replace("ENGINEERING", "ENG.") : abbreviated;
-    //     abbreviated = abbreviated.includes("MANAGEMENT") ? abbreviated.replace("MANAGEMENT", "MGMT.") : abbreviated;
-    //     abbreviated = abbreviated.includes("MISCELLANEOUS") ? abbreviated.replace("MISCELLANEOUS", "MISC.") : abbreviated;
-    //     return abbreviated;
-    // }
 }
 
 
