@@ -83,23 +83,35 @@ class ScatterplotVis {
         // Append tooltip
         vis.tooltip = d3.select('body').append('div').attr('class', 'tooltip')
 
+        vis.allData = vis.data
+
+        vis.allData.forEach(function(d){
+
+            if (d.ShareWomen) {
+
+                d.ShareWomen = d.ShareWomen * 100
+
+                return d
+            }
+        })
+
         this.wrangleData();
     }
 
     wrangleData(){
         let vis = this
 
-        vis.displayData.forEach(function(d){
+        // selected category in dropdown
+        vis.selectedCategory = document.getElementById("selectedCategory").value;
 
-            if (d.ShareWomen) {
 
-                d.ShareWomen = +d.ShareWomen
-
-                d.Median = +d.Median
-                return d
-            }
-        })
-
+        // filter by selected major category
+        if (vis.selectedCategory === "Overall") {
+            vis.displayData = vis.allData;
+        }
+        else {
+            vis.displayData = vis.allData.filter(a => a["Major_category"] === vis.selectedCategory);
+        }
 
         vis.updateVis()
 
@@ -110,10 +122,10 @@ class ScatterplotVis {
 
         // x domain
 
-        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)) - 0.01, d3.max(vis.displayData.map(d=> d.ShareWomen))]);
+        vis.x.domain([d3.min(vis.allData.map(d=> d.ShareWomen)) - 1, d3.max(vis.allData.map(d=> d.ShareWomen)) + 4]);
 
         // y domain
-        vis.y.domain([d3.min(vis.displayData.map(d=> d.Median)) - 3000, d3.max(vis.displayData.map(d=> d.Median))]);
+        vis.y.domain([d3.min(vis.allData.map(d=> d.Median)) - 3000, d3.max(vis.allData.map(d=> d.Median))]);
 
 
         vis.circles = vis.svg.selectAll("circle")
@@ -149,7 +161,7 @@ class ScatterplotVis {
                                 <h5>${d.Major}<h5>
                                 <h5>Category: ${d.Major_category}<h5>
                                 <h5>Median Income: $${d.Median.toLocaleString("en-US")}</h5> 
-                                <h5>Percentage of Women: ${Math.floor(d.ShareWomen * 100)}%</h5>         
+                                <h5>Percentage of Women: ${Math.floor(d.ShareWomen)}%</h5>         
                                 <!-- <h5>Men: ${d.Men}</h5>            
                                 <h5>Women: ${d.Women}</h5> -->                     
                              </div>`);
