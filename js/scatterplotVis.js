@@ -105,15 +105,7 @@ class ScatterplotVis {
 
         // y domain
         vis.y.domain([d3.min(vis.allData.map(d=> d.Median)) - 3000, d3.max(vis.allData.map(d=> d.Median))]);
-
-        vis.xAxisGroup = vis.svg.select(".x-axis")
-            .attr("transform", "translate(0," + vis.height + ")")
-            .call(vis.xAxis);
-
-        vis.yAxisGroup = vis.svg.select(".y-axis")
-            .call(vis.yAxis);
-
-
+        
         vis.circles = vis.svg.selectAll("circle")
             .data(vis.displayData);
 
