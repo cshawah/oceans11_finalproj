@@ -102,8 +102,6 @@ class InnovativeVis {
             })
         });
 
-        let test = 0;
-
         vis.dotsTotal = [];
         vis.dotsMen = [];
         vis.dotsWomen = [];
@@ -118,8 +116,9 @@ class InnovativeVis {
                vis.dotsTotal.push({
                    Index: counterTotal,
                    MajorCat: cat.Category,
-                   Gender: (i < cat.Men/overallTotal * 100 ? "M":"F"),
-                   Random: Math.random()
+                   Gender: (i < Math.round(cat.Men/overallTotal * 100) ? "M":"F"),
+                   Random: Math.random(),
+                   Int: cat.IntTotal
                });
                 counterTotal += 1;
             }
@@ -128,7 +127,8 @@ class InnovativeVis {
                     Index: counterTotal,
                     MajorCat: cat.Category,
                     Random: Math.random(),
-                    Gender: (i <= cat.Men/overallTotal * 100 ? "M":"F")
+                    Gender: (i <= cat.Men/overallTotal * 100 ? "M":"F"),
+                    Int: cat.IntTotal
                 });
                 counterRandom += 1;
             }
@@ -136,7 +136,8 @@ class InnovativeVis {
                 vis.dotsWomen.push({
                     Index: counterWomen,
                     MajorCat: cat.Category,
-                    Gender: "F"
+                    Gender: "F",
+                    Int: cat.IntWomen
                 });
                 counterWomen += 1;
             }
@@ -144,7 +145,8 @@ class InnovativeVis {
                 vis.dotsMen.push({
                     Index: counterMen,
                     MajorCat: cat.Category,
-                    Gender: "M"
+                    Gender: "M",
+                    Int: cat.IntMen
                 });
                 counterMen += 1;
             }
@@ -157,7 +159,6 @@ class InnovativeVis {
         vis.allData[2] = vis.dotsWomen;
         vis.allData[3] = vis.dotsRandom.sort((a, b) => a.Random - b.Random);
 
-        console.log(vis.allData);
 
         // Update the visualization
         vis.updateVis();
@@ -184,7 +185,6 @@ class InnovativeVis {
             vis.n = vis.selection;
         }
 
-        console.log(vis.n);
 
         var symbol = d3.symbol().type(function(d) {
             if(d.Gender === 'M') {
@@ -194,7 +194,6 @@ class InnovativeVis {
             }
         }).size(500);
 
-        console.log(vis.allData);
 
         vis.svg.selectAll('path.total')
             .transition(500)
@@ -223,8 +222,9 @@ class InnovativeVis {
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-                             <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-                                 <h5>${d.MajorCat}</h5>
+                             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 10px">
+                                 <h5 style="font-weight: bold">${d.MajorCat}</h5>
+                                 <h5>${d.Int}% of students</h5>
                              </div>`)})
             .on('mouseout', function(event, d){
                 d3.select(this)

@@ -3,13 +3,17 @@
 }
 
 h4 {
-    padding-top: 50px;
+    padding: 30px;
     text-align: center;
 }
 
 .filterDropdown {
     width: 50%;
     height: 35px;
+}
+
+.div-bar-lab {
+    font-size: 10pt;
 }
 
 .tooltip {
@@ -31,6 +35,7 @@ h4 {
 }
 .tooltip h5 {
     font: 14px sans-serif;
+    color: black;
 }
 
 h1, h2, h4 {
@@ -42,13 +47,17 @@ p {
     text-align: left;
 }
 
-.authors {
+h5 {
     font-family: 'Space Grotesk', sans-serif;
-    color: gray;
+    color: black;
     font-size: 13pt;
 }
 
 .row .col h6 {
     align-items: center;
     justify-items: center;
+}
+
+h6 {
+    font-family: 'Space Grotesk', sans-serif;
 }

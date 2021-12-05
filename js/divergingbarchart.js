@@ -57,20 +57,20 @@ class DivergingBarChart {
 
         // Axis title
         vis.svg.append("text")
-            .attr("x", vis.width - vis.width/2)
+            .attr("x", vis.width - vis.width/1.8)
             .attr("y", vis.height+10)
-            .text("% over or under parity");
+            .text("% over or under gender parity");
 
         vis.svg.append("text")
             .attr("class", "div-bar-lab")
-            .attr("x", vis.width/4)
-            .attr("y", vis.height+10)
+            .attr("x", vis.width*0.13)
+            .attr("y", vis.height)
             .text("More Men");
 
         vis.svg.append("text")
             .attr("class", "div-bar-lab")
-            .attr("x", vis.width*3/4)
-            .attr("y", vis.height+10)
+            .attr("x", vis.width*.9)
+            .attr("y", vis.height)
             .text("More Women");
 
         vis.tooltip = d3.select("body").append('div')
@@ -184,9 +184,9 @@ class DivergingBarChart {
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-                             <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-                                 <h5>${d.majorCat}</h5>
-                                 <h5>Percentage of Women: ${Math.round(d.shareWomen*100)/100}%</h5>
+                             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 10px">
+                                 <h5 style="font-weight: bold">${d.majorCat}</h5>
+                                 <h5>Percent Women: ${Math.round(d.shareWomen*100)/100}%</h5>
                              </div>`)})
             .on('mouseout', function(event, d){
                 d3.select(this)
