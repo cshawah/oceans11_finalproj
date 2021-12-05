@@ -46,9 +46,9 @@ class ScatterplotVis {
         vis.xAxis = d3.axisBottom()
             .scale(vis.x);
 
-        // y-Axis title
+        // x-Axis title
         vis.svg.append("text")
-            .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 30) + ")")
+            .attr("transform", "translate(" + (vis.width / 2) + " ," + (vis.height + 45) + ")")
             .text("Percentage of Women");
 
         // y-Axis title
