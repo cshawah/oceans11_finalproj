@@ -108,7 +108,7 @@ class ScatterplotVis {
 
         // x domain
 
-        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)) - 0.01, d3.max(vis.displayData.map(d=> d.ShareWomen))]);
+        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)) - 1, d3.max(vis.displayData.map(d=> d.ShareWomen)) + 4]);
 
         // y domain
         vis.y.domain([d3.min(vis.displayData.map(d=> d.Median)) - 3000, d3.max(vis.displayData.map(d=> d.Median))]);
