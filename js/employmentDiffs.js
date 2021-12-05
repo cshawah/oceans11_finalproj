@@ -3,22 +3,21 @@ class EmploymentDiff {
     constructor(_parentElement, _data) {
         this.parentElement = _parentElement;
         this.data = _data;
-        //let lightOpacity = 0.3;
-        this.colors1 = ["rgba(173,255,47, 0.3)", "rgba(0,100,0,0.3)", "rgba(72,61,139, 0.3)",
+        this.colors1 = ["rgba(173,255,47, 0.3)", "rgba(0,100,0,0.3)", "rgba(0,0,255,0.3)",
             "rgba(220, 20, 60, 0.3)", "rgba(138,43,226, 0.3)", "rgba(255,255,0, 0.3)",
-            "rgba(0,0,139,0.3)", "rgba(139,0,0,0.3)", "rgba(0, 139, 139, 0.3)",
-            "rgba(0,0,128,0.3)", "rgba(0,128,0,0.3)", "rgba(153, 50, 204, 0.3)",
-            "rgba(255,165,0,0.3)", "rgba(255,69,0,0.3)", "rgba(75,0,130,0.3)", "rgba(0,0,255,0.3)", "rgba(139, 0, 139, 0.3)"];
-        this.colors2 = ["rgba(173,255,47, 0.6)", "rgba(0,100,0,0.6)", "rgba(72,61,139, 0.6)",
+            "rgba(72,61,139, 0.3)", "rgba(139,0,0,0.3)", "rgba(0, 139, 139, 0.3)",
+            "rgba(0,0,139,0.3)", "rgba(0, 255, 127, 0.3)", "rgba(218,112,214,0.3)",
+            "rgba(255,165,0,0.3)", "rgba(255,69,0,0.3)", "rgba(75,0,130,0.3)", "rgba(135, 206, 250, 0.3)" , "rgba(139, 0, 139, 0.3)"];
+        this.colors2 = ["rgba(173,255,47, 0.6)", "rgba(0,100,0,0.6)", "rgba(0,0,255,0.6)",
             "rgba(220, 20, 60, 0.6)", "rgba(138,43,226, 0.6)", "rgba(255,255,0, 0.6)",
-            "rgba(0,0,139,0.6)", "rgba(139,0,0,0.6)", "rgba(0, 139, 139, 0.6)",
-            "rgba(0,0,128,0.6)", "rgba(0,128,0,0.6)", "rgba(153, 50, 204, 0.6)",
-            "rgba(255,165,0,0.6)", "rgba(255,69,0,0.6)", "rgba(75,0,130,0.6)", "rgba(0,0,255,0.6)", "rgba(139, 0, 139, 0.6)"];
-        this.colors3 = ["greenyellow", "darkgreen", "darkslateblue",
-            "crimson", "blueviolet", "yellow",
-            "darkblue", "darkred", "darkcyan",
-            "navy", "green", "darkorchid",
-            "orange", "orangered", "indigo", "blue", "darkmagenta"];
+            "rgba(72,61,139, 0.6)", "rgba(139,0,0,0.6)", "rgba(0, 139, 139, 0.6)",
+            "rgba(0,0,139,0.6)", "rgba(0, 255, 127, 0.6)", "rgba(218,112,214,0.6)",
+            "rgba(255,165,0,0.6)", "rgba(255,69,0,0.6)", "rgba(75,0,130,0.6)", "rgba(135, 206, 250, 0.6)", "rgba(139, 0, 139, 0.6)"];
+        this.colors3 = ["greenyellow", "green", "blue",
+                        "crimson", "blueviolet", "yellow",
+                        "darkslateblue", "darkred", "darkcyan",
+                        "darkblue", "springgreen",  "orchid",
+                        "orange",  "orangered","indigo","lightskyblue"]
         this.display_data = [];
 
         this.initVis();
@@ -77,9 +76,10 @@ class EmploymentDiff {
                     counterUnemployed += row.Unemployed
                     counterPartTime += row.Part_time
                     counterFullTime += row.Full_time
-                    counterTotal += row.Total
                 }
             })
+
+            counterTotal = counterUnemployed + counterFullTime + counterPartTime
 
             counterUnemployed = (counterUnemployed / counterTotal) * 100
             counterPartTime =  (counterPartTime/counterTotal) * 100
@@ -94,6 +94,7 @@ class EmploymentDiff {
             vis.fullTimeCategories.push({
                 counterFullTime
             })
+
             counterUnemployed = 0
             counterPartTime = 0
             counterFullTime = 0
@@ -143,7 +144,7 @@ class EmploymentDiff {
                 }
             ]
         }
-        console.log(vis.display_data)
+        // console.log(vis.display_data)
         vis.updateVis()
     }
 
