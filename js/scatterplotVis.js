@@ -83,13 +83,9 @@ class ScatterplotVis {
         // Append tooltip
         vis.tooltip = d3.select('body').append('div').attr('class', 'tooltip')
 
-        this.wrangleData();
-    }
+        vis.allData = vis.data
 
-    wrangleData(){
-        let vis = this
-
-        vis.displayData.forEach(function(d){
+        vis.allData.forEach(function(d){
 
             if (d.ShareWomen) {
 
@@ -98,6 +94,24 @@ class ScatterplotVis {
                 return d
             }
         })
+
+        this.wrangleData();
+    }
+
+    wrangleData(){
+        let vis = this
+
+        // selected category in dropdown
+        vis.selectedCategory = document.getElementById("selectedCategory").value;
+
+
+        // filter by selected major category
+        if (vis.selectedCategory === "Overall") {
+            vis.displayData = vis.allData;
+        }
+        else {
+            vis.displayData = vis.allData.filter(a => a["Major_category"] === vis.selectedCategory);
+        }
 
         vis.updateVis()
 
@@ -108,10 +122,10 @@ class ScatterplotVis {
 
         // x domain
 
-        vis.x.domain([d3.min(vis.displayData.map(d=> d.ShareWomen)) - 1, d3.max(vis.displayData.map(d=> d.ShareWomen)) + 4]);
+        vis.x.domain([d3.min(vis.allData.map(d=> d.ShareWomen)) - 1, d3.max(vis.allData.map(d=> d.ShareWomen)) + 4]);
 
         // y domain
-        vis.y.domain([d3.min(vis.displayData.map(d=> d.Median)) - 3000, d3.max(vis.displayData.map(d=> d.Median))]);
+        vis.y.domain([d3.min(vis.allData.map(d=> d.Median)) - 3000, d3.max(vis.allData.map(d=> d.Median))]);
 
 
         vis.circles = vis.svg.selectAll("circle")
