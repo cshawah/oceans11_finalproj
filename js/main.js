@@ -67,3 +67,7 @@ function createVis(data) {
 function updateVisualization() {
     boxandwhisker.wrangleData();
 }
+
+function updateVis() {
+    scatterplot.wrangleData();
+}
