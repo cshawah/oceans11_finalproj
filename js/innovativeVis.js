@@ -218,9 +218,9 @@ class InnovativeVis {
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-                             <div style="border: thin solid grey; border-radius: 5px; background: white; padding: 10px">
-                                 <h5 style="font-weight: bold">${d.MajorCat}</h5>
-                                 <h5>${d.Int}% of students</h5>
+                             <div style="border: thin solid grey; border-radius: 5px; background: black; padding: 8px">
+                                 <h5 style="font-weight: bold; color: white">${d.MajorCat}</h5>
+                                 <h5 style="color: white">${d.Int}% of students</h5>
                              </div>`)})
             .on('mouseout', function(event, d){
                 d3.select(this)
