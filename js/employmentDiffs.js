@@ -14,10 +14,10 @@ class EmploymentDiff {
             "rgba(0,0,139,0.6)", "rgba(0, 255, 127, 0.6)", "rgba(218,112,214,0.6)",
             "rgba(255,165,0,0.6)", "rgba(255,69,0,0.6)", "rgba(75,0,130,0.6)", "rgba(135, 206, 250, 0.6)", "rgba(139, 0, 139, 0.6)"];
         this.colors3 = ["greenyellow", "green", "blue",
-                        "crimson", "blueviolet", "yellow",
-                        "darkslateblue", "darkred", "darkcyan",
-                        "darkblue", "springgreen",  "orchid",
-                        "orange",  "orangered","indigo","lightskyblue"]
+            "crimson", "blueviolet", "yellow",
+            "darkslateblue", "darkred", "darkcyan",
+            "darkblue", "springgreen",  "orchid",
+            "orange",  "orangered","indigo","lightskyblue"]
         this.display_data = [];
 
         this.initVis();
@@ -128,18 +128,21 @@ class EmploymentDiff {
                     label: "Unemployed",
                     backgroundColor: vis.colors1,
                     borderWidth: 1,
+                    borderColor: "rgba(0, 0, 0, 1.0)",
                     data: vis.unemployedCategories
                 },
                 {
                     label: "Part Time",
                     backgroundColor: vis.colors2,
-                    borderWidth: 2,
+                    borderWidth: 1,
+                    borderColor: "rgba(0, 0, 0, 1.0)",
                     data: vis.partTimeCategories
                 },
                 {
                     label: "Full Time",
                     backgroundColor: vis.colors3,
-                    borderWidth: 3,
+                    borderWidth: 1,
+                    borderColor: "rgba(0, 0, 0, 1.0)",
                     data: vis.fullTimeCategories
                 }
             ]
