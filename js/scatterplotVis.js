@@ -4,6 +4,7 @@ class ScatterplotVis {
         this.data = data;
         this.displayData = this.data;
         this.majorCategoryColors = colors
+        this.majorCategory = ''
 
         this.initVis()
     }
@@ -101,16 +102,10 @@ class ScatterplotVis {
     wrangleData(){
         let vis = this
 
-        // selected category in dropdown
-        vis.selectedCategory = document.getElementById("selectedCategory").value;
-
-
-        // filter by selected major category
-        if (vis.selectedCategory === "Overall") {
+        if (vis.majorCategory){
+            vis.displayData = vis.allData.filter(a => a["Major_category"] === vis.majorCategory);
+        }else{
             vis.displayData = vis.allData;
-        }
-        else {
-            vis.displayData = vis.allData.filter(a => a["Major_category"] === vis.selectedCategory);
         }
 
         vis.updateVis()
@@ -121,7 +116,6 @@ class ScatterplotVis {
         let vis = this;
 
         // x domain
-
         vis.x.domain([d3.min(vis.allData.map(d=> d.ShareWomen)) - 1, d3.max(vis.allData.map(d=> d.ShareWomen)) + 4]);
 
         // y domain
@@ -130,8 +124,6 @@ class ScatterplotVis {
 
         vis.circles = vis.svg.selectAll("circle")
             .data(vis.displayData);
-
-        // console.log(vis.displayData)
 
         vis.circles.enter()
             .append("circle")
@@ -152,6 +144,8 @@ class ScatterplotVis {
             .style('stroke', "#000")
             .style('opacity', 0.8)
             .on('mouseover', function(event, d) {
+                vis.majorCategory = d.Major_category
+                vis.wrangleData()
                 vis.tooltip
                     .style("opacity", 1)
                     .style("left", event.pageX + 20 + "px")
@@ -167,6 +161,8 @@ class ScatterplotVis {
                              </div>`);
                 }
             ).on('mouseout', function(){
+            vis.majorCategory = ''
+            vis.wrangleData()
                 vis.tooltip
                     .style("opacity", 0)
                     .style("left", 0)
