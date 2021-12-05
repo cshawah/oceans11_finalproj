@@ -4,6 +4,7 @@ class ScatterplotVis {
         this.data = data;
         this.displayData = this.data;
         this.majorCategoryColors = colors
+        this.majorCategory = ''
 
         this.initVis()
     }
@@ -14,7 +15,6 @@ class ScatterplotVis {
         vis.margin = {top: 20, right: 20, bottom: 50, left: 60};
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
-       // vis.height = document.getElementById(vis.parentElement).getBoundingClientRect().height - vis.margin.top - vis.margin.bottom;
 
         // init drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -23,22 +23,10 @@ class ScatterplotVis {
             .append('g')
             .attr('transform', `translate (${vis.margin.left}, ${vis.margin.top})`);
 
-        // add title
-        // vis.svg.append('g')
-        //     .attr('class', 'title bar-title')
-        //     .append('text')
-        //     .text('Gender and Salary Scatter Plot')
-        //     .attr('transform', `translate(${vis.width / 2}, 10)`)
-        //     .attr('text-anchor', 'middle');
-
         // append tooltip
         vis.tooltip = d3.select("body").append('div')
             .attr('class', "tooltip")
             .attr('id', 'circleTooltip')
-
-        // vis.colorScale = d3.scaleQuantize()
-        //     .range(["rgb(237,248,233)", "rgb(186,228,179)",
-        //         "rgb(116,196,118)", "rgb(49,163,84)", "rgb(0,109,44)"])
 
         // D3 color scale.
         vis.categories = new Set()
@@ -46,8 +34,6 @@ class ScatterplotVis {
         for (let i = 0; i< vis.displayData.length; i++) {
             vis.categories.add(vis.displayData[i].Major_category)
         };
-
-        // vis.colors = ['#FF0000', '#FF7F00', '#FFFF00', '#00FF00', '#0000FF', '#8B00FF', '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
 
         // Scales and axes
         vis.x = d3.scaleLinear()
@@ -101,16 +87,10 @@ class ScatterplotVis {
     wrangleData(){
         let vis = this
 
-        // selected category in dropdown
-        vis.selectedCategory = document.getElementById("selectedCategory").value;
-
-
-        // filter by selected major category
-        if (vis.selectedCategory === "Overall") {
+        if (vis.majorCategory){
+            vis.displayData = vis.allData.filter(a => a["Major_category"] === vis.majorCategory);
+        }else{
             vis.displayData = vis.allData;
-        }
-        else {
-            vis.displayData = vis.allData.filter(a => a["Major_category"] === vis.selectedCategory);
         }
 
         vis.updateVis()
@@ -121,7 +101,6 @@ class ScatterplotVis {
         let vis = this;
 
         // x domain
-
         vis.x.domain([d3.min(vis.allData.map(d=> d.ShareWomen)) - 1, d3.max(vis.allData.map(d=> d.ShareWomen)) + 4]);
 
         // y domain
@@ -130,8 +109,6 @@ class ScatterplotVis {
 
         vis.circles = vis.svg.selectAll("circle")
             .data(vis.displayData);
-
-        // console.log(vis.displayData)
 
         vis.circles.enter()
             .append("circle")
@@ -152,6 +129,8 @@ class ScatterplotVis {
             .style('stroke', "#000")
             .style('opacity', 0.8)
             .on('mouseover', function(event, d) {
+                vis.majorCategory = d.Major_category
+                vis.wrangleData()
                 vis.tooltip
                     .style("opacity", 1)
                     .style("left", event.pageX + 20 + "px")
@@ -161,12 +140,12 @@ class ScatterplotVis {
                                 <h5 style="font-weight: bold">${d.Major}<h5>
                                 <h5>Category: ${d.Major_category}<h5>
                                 <h5>Median Income: $${d.Median.toLocaleString("en-US")}</h5> 
-                                <h5>Percentage of Women: ${Math.floor(d.ShareWomen)}%</h5>         
-                                <!-- <h5>Men: ${d.Men}</h5>            
-                                <h5>Women: ${d.Women}</h5> -->                     
+                                <h5>Percentage of Women: ${Math.floor(d.ShareWomen)}%</h5>                  
                              </div>`);
                 }
             ).on('mouseout', function(){
+            vis.majorCategory = ''
+            vis.wrangleData()
                 vis.tooltip
                     .style("opacity", 0)
                     .style("left", 0)
