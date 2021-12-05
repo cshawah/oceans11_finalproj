@@ -157,8 +157,8 @@ class ScatterplotVis {
                     .style("left", event.pageX + 20 + "px")
                     .style("top", event.pageY + "px")
                     .html(`
-                             <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-                                <h5>${d.Major}<h5>
+                             <div style="border: thin solid grey; border-radius: 5px; background: black; padding: 8px">
+                                <h5 style="font-weight: bold">${d.Major}<h5>
                                 <h5>Category: ${d.Major_category}<h5>
                                 <h5>Median Income: $${d.Median.toLocaleString("en-US")}</h5> 
                                 <h5>Percentage of Women: ${Math.floor(d.ShareWomen)}%</h5>         

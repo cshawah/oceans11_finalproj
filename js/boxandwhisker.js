@@ -224,8 +224,8 @@ class BoxandWhiskerVis {
                         .style("left", event.pageX + 10 + "px")
                         .style("top", event.pageY + "px")
                         .html(`
-                         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-                            <h5>${d.category.toUpperCase()}<h5>
+                         <div style="border: thin solid grey; border-radius: 5px; background: black; padding: 8px">
+                            <h5 style="font-weight: bold">${d.category.toUpperCase()}<h5>
                             <h5>Avg. Median Income: $${d.averageMedian.toLocaleString("en-US")}</h5> 
                             <h5>Avg. 25th Percentile: $${d.averageTwentyFifth.toLocaleString("en-US")}</h5> 
                             <h5>Avg. 75th Percentile: $${d.averageSeventyFifth.toLocaleString("en-US")}</h5>                       
@@ -298,8 +298,8 @@ class BoxandWhiskerVis {
                         .style("left", event.pageX + 10 + "px")
                         .style("top", event.pageY + "px")
                         .html(`
-                         <div style="border: thin solid grey; border-radius: 5px; background: lightgrey; padding: 20px">
-                            <h5>${d.fullMajor}<h5> 
+                         <div style="border: thin solid grey; border-radius: 5px; background: black; padding: 8px">
+                            <h5 style="font-weight: bold">${d.fullMajor}<h5> 
                             <h5>Category: ${d.Major_category}<h5>
                             <h5>Median Income: $${d.Median.toLocaleString("en-US")}</h5> 
                             <h5>25th Percentile: $${d["P25th"].toLocaleString("en-US")}</h5> 
