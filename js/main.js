@@ -64,11 +64,11 @@ function createVis(data) {
     scatterplot = new ScatterplotVis('gender_salary_bars', data, majorCategoryColors);
 }
 
-function updateVisualization() {
+function updateBoxandWhisker() {
     boxandwhisker.wrangleData();
 }
 
-function updateVis() {
+function updateScatterPlot() {
     scatterplot.wrangleData();
 }
 
