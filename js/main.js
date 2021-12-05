@@ -42,7 +42,7 @@ function createVis(data) {
     let majorCategoryColors = [];
     let colors = ["darkred", "crimson", "orangered", "orange",
         "yellow", "greenyellow", "springgreen", "green",
-        "cyan", "lightskyblue", "blue", "darkslateblue",
+        "darkcyan", "lightskyblue", "blue", "darkslateblue",
         "darkblue", "indigo", "blueviolet", "orchid"]; // defined 16 colors (ROYGBIV)
     // TODO: fix colors on the grouped bar chart -> new colors are springgreen, (dark?)cyan, lightskyblue, and orchid
     let index = 0;
