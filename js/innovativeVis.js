@@ -26,8 +26,9 @@ class InnovativeVis {
 
         vis.margin = { top: 0, right: 0, bottom: 0, left: 60 };
 
-        vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
-        vis.height = 400 - vis.margin.top - vis.margin.bottom;
+        vis.width = 350 - vis.margin.top - vis.margin.bottom;
+     //   vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
+        vis.height = 350 - vis.margin.top - vis.margin.bottom;
 
         // SVG drawing area
         vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -117,7 +118,8 @@ class InnovativeVis {
                vis.dotsTotal.push({
                    Index: counterTotal,
                    MajorCat: cat.Category,
-                   Gender: (i <= cat.Men/overallTotal * 100 ? "M":"F")
+                   Gender: (i < cat.Men/overallTotal * 100 ? "M":"F"),
+                   Random: Math.random()
                });
                 counterTotal += 1;
             }
@@ -150,7 +152,7 @@ class InnovativeVis {
 
         vis.allData = [];
 
-        vis.allData[0] = vis.dotsTotal;
+        vis.allData[0] = vis.dotsTotal.sort((a, b) => a.Index - b.Index);
         vis.allData[1] = vis.dotsMen;
         vis.allData[2] = vis.dotsWomen;
         vis.allData[3] = vis.dotsRandom.sort((a, b) => a.Random - b.Random);
@@ -159,6 +161,8 @@ class InnovativeVis {
 
         // Update the visualization
         vis.updateVis();
+
+
     }
 
     /*
@@ -166,20 +170,49 @@ class InnovativeVis {
      * Function parameters only needed if different kinds of updates are needed
      */
     updateVis() {
+
         let vis = this;
 
-        //vis.dotsTotal, vis.dotsWomen, vis.dotsMen
+        // selected category in dropdown
+        vis.selection = document.getElementById("selectSort").value;
 
-        vis.circles = vis.svg.selectAll('circle.total')
+        // filter by selected major category
+        if (vis.n === 1 || vis.n === 2) {
+            vis.n = vis.n;
+        }
+        else {
+            vis.n = vis.selection;
+        }
+
+        console.log(vis.n);
+
+        var symbol = d3.symbol().type(function(d) {
+            if(d.Gender === 'M') {
+                return d3.symbolSquare;
+            } else {
+                return d3.symbolCircle;
+            }
+        }).size(500);
+
+        console.log(vis.allData);
+
+        vis.svg.selectAll('path.total')
+            .transition(500)
+            .style("opacity", 0)
+            .remove();
+
+        vis.symbols = vis.svg.selectAll('total')
             .data(vis.allData[vis.n], d => d.Index);
 
-        vis.circles.exit().remove();
+        //vis.symbols.exit().remove();
 
-        vis.circles.enter()
-            .append('circle').attr('class', 'total')
-            .attr("cx", (d,i) => ((i % 10)*30))
-            .attr("cy", (d,i) => ((Math.floor(i/10)+1) * 30))
-            .attr("r", 13) // good
+        vis.symbols.exit().remove();
+
+        vis.symbols.enter()
+            .append('path')
+            .attr('d', symbol)
+            .attr('class', 'total')
+            .attr("transform", function (d, i) { return "translate("+ ((i % 10)*30) + ", " + ((Math.floor(i/10)+1) * 30)+")" })
             .attr("stroke", "black")
             .style("fill", d => vis.majorCategoryColors[d.MajorCat])
             .on('mouseover', function(event, d){
@@ -202,6 +235,11 @@ class InnovativeVis {
                     .style("top", 0)
                     .html(``);
             })
+            .style("opacity", 0)
+            .transition()
+            .duration(1000)
+            .style("opacity", 1)
+
 
         // TODO: calculate and draw number of circles per category, placing them in the correct spot using the scales
         // Math.floor(category.Total / overallTotal * 100); // code to calculate number of circles to draw for each category (when on the overall button)

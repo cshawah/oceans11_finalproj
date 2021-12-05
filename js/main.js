@@ -42,9 +42,9 @@ function createVis(data) {
     let majorCategoryColors = [];
     let colors = ["darkred", "crimson", "orangered", "orange",
         "yellow", "greenyellow", "springgreen", "green",
-        "cyan", "lightskyblue", "blue", "darkslateblue",
+        "darkcyan", "lightskyblue", "blue", "darkslateblue",
         "darkblue", "indigo", "blueviolet", "orchid"]; // defined 16 colors (ROYGBIV)
-    // TODO: fix colors on the grouped bar chart -> new colors are springgreen, cyan, lightskyblue, and orchid
+    // TODO: fix colors on the grouped bar chart -> new colors are springgreen, (dark?)cyan, lightskyblue, and orchid
     let index = 0;
     data.forEach(element => {
         if (!Object.keys(majorCategoryColors).includes(element["Major_category"]) && majorCategoryColors.length < 16) {
@@ -54,7 +54,7 @@ function createVis(data) {
     });
     console.log(majorCategoryColors);
 
-    innovativeVis_total = new InnovativeVis("popular_majors_t", data, majorCategoryColors, 0);
+    innovativeVis_total = new InnovativeVis("popular_majors_t", data, majorCategoryColors, 3);
     innovativeVis_men = new InnovativeVis("popular_majors_m", data, majorCategoryColors, 1);
     innovativeVis_women = new InnovativeVis("popular_majors_w", data, majorCategoryColors, 2);
     divergingbarchart = new DivergingBarChart('gender_diffs_bars', data, majorCategoryColors);
@@ -70,4 +70,8 @@ function updateVisualization() {
 
 function updateVis() {
     scatterplot.wrangleData();
+}
+
+function updateInnovVis() {
+    innovativeVis_total.updateVis();
 }

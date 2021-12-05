@@ -42,8 +42,13 @@ p {
     text-align: left;
 }
 
-h5 {
+.authors {
     font-family: 'Space Grotesk', sans-serif;
     color: gray;
     font-size: 13pt;
+}
+
+.row .col h6 {
+    align-items: center;
+    justify-items: center;
 }

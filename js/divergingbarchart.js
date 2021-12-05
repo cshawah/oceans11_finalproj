@@ -13,7 +13,7 @@ class DivergingBarChart {
 
         let vis = this;
 
-        vis.margin = {top: 0, right: 20, bottom: 20, left: 60};
+        vis.margin = {top: 0, right: 20, bottom: 20, left: 50};
         vis.padding = {top: 0, right: 0, bottom: 0, left: 125};
         vis.width = document.getElementById(vis.parentElement).getBoundingClientRect().width - vis.margin.left - vis.margin.right;
         vis.height = 500 - vis.margin.top - vis.margin.bottom;
@@ -59,7 +59,7 @@ class DivergingBarChart {
         vis.svg.append("text")
             .attr("x", vis.width - vis.width/2)
             .attr("y", vis.height+10)
-            .text("% over/under parity");
+            .text("% over or under parity");
 
         vis.svg.append("text")
             .attr("class", "div-bar-lab")
