@@ -44,7 +44,8 @@ class BoxandWhiskerVis {
             .range([vis.height, 0]);
 
         vis.xAxis = d3.axisBottom()
-            .scale(vis.x);
+            .scale(vis.x)
+            .tickFormat(d => d.toUpperCase());
 
         vis.yAxis = d3.axisLeft()
             .scale(vis.y);
@@ -79,8 +80,6 @@ class BoxandWhiskerVis {
 
         // data for category box and whisker
         if (vis.isByCategory) {
-            // TODO: sort categories by average median
-
             // list of categories for x-axis
             vis.categories = Object.keys(vis.majorCategoryColors);
 
@@ -103,16 +102,26 @@ class BoxandWhiskerVis {
             // console.log(tempData);
 
             // calculate averages to build final data structure (list)
-            vis.categories.forEach(cat => {
+            vis.categories.forEach(category => {
                 vis.displayData.push({
-                    category: cat,
-                    averageMedian: Math.ceil(tempData[cat].sumMedian / tempData[cat].entries),
-                    averageTwentyFifth: Math.ceil(tempData[cat].sumTwentyFifth / tempData[cat].entries),
-                    averageSeventyFifth: Math.ceil(tempData[cat].sumSeventyFifth / tempData[cat].entries)
+                    category: category,
+                    averageMedian: Math.ceil(tempData[category].sumMedian / tempData[category].entries),
+                    averageTwentyFifth: Math.ceil(tempData[category].sumTwentyFifth / tempData[category].entries),
+                    averageSeventyFifth: Math.ceil(tempData[category].sumSeventyFifth / tempData[category].entries)
                 })
             });
 
+            vis.displayData.sort((a, b) => b.averageMedian - a.averageMedian);
+            vis.categories = [];
+
+            vis.displayData.forEach(element => {
+                if (!vis.categories.includes(element.category)) {
+                    vis.categories.push(element.category);
+                }
+            })
+
             console.log(vis.displayData);
+            console.log(vis.categories);
         }
         // data for majors box and whisker
         else {
@@ -164,9 +173,6 @@ class BoxandWhiskerVis {
         let vis = this;
 
         if (vis.isByCategory) {
-            // selected category in dropdown
-            let selectedCategory = document.getElementById("selectBox").value;
-
             vis.x.domain(vis.categories);
             vis.y.domain([0, d3.max(vis.displayData, d => d.averageSeventyFifth) + 10000]);
 
