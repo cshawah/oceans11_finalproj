@@ -108,6 +108,25 @@
 		<div class="row">
 			<h4>Gender Distribution Versus Median Income</h4>
 			<div class="col col-md-12">
+				<select id='selectedCategory' class="filterDropdown" onchange="updateVis()">
+					<option value="Overall" selected>All Majors</option>
+					<option value="Agriculture & Natural Resources">Agriculture & Natural Resources</option>
+					<option value="Arts">Arts</option>
+					<option value="Biology & Life Science">Biology & Life Science</option>
+					<option value="Business">Business</option>
+					<option value="Communications & Journalism">Communications & Journalism</option>
+					<option value="Computers & Mathematics">Computers & Mathematics</option>
+					<option value="Education">Education</option>
+					<option value="Engineering">Engineering</option>
+					<option value="Health">Health</option>
+					<option value="Humanities & Liberal Arts">Humanities & Liberal Arts</option>
+					<option value="Industrial Arts & Consumer Services">Industrial Arts & Consumer Services</option>
+					<option value="Interdisciplinary">Interdisciplinary</option>
+					<option value="Law & Public Policy">Law & Public Policy</option>
+					<option value="Physical Sciences">Physical Sciences</option>
+					<option value="Psychology & Social Work">Psychology & Social Work</option>
+					<option value="Social Science">Social Science</option>
+				</select>
 				<div id="gender_salary_bars">
 				</div>
 				<p><br> <br>The trend here is clear: the higher the percentage of women in a major, the lower the median income for that particular major. This is also reflected in major categories; the Engineering majors (shown in dark red) have much lower percentages of women than Psychology & Social Work (dark purple) majors. This trend is consistent with what was shown in the distribution of major categories over students: it seems that Psychology & Social Work majors are more likely to appeal to women than Engineering majors, implying that more needs to be done to encourage more women to pursue careers in these fields. Additionally, considering how drastic the difference in median income is between majors with larger shares of women and those without, perhaps jobs that already have higher shares of women should have higher incomes. </p>
