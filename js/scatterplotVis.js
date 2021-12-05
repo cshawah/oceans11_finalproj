@@ -93,13 +93,11 @@ class ScatterplotVis {
 
             if (d.ShareWomen) {
 
-                d.ShareWomen = +d.ShareWomen
+                d.ShareWomen = d.ShareWomen * 100
 
-                d.Median = +d.Median
                 return d
             }
         })
-
 
         vis.updateVis()
 
@@ -149,7 +147,7 @@ class ScatterplotVis {
                                 <h5>${d.Major}<h5>
                                 <h5>Category: ${d.Major_category}<h5>
                                 <h5>Median Income: $${d.Median.toLocaleString("en-US")}</h5> 
-                                <h5>Percentage of Women: ${Math.floor(d.ShareWomen * 100)}%</h5>         
+                                <h5>Percentage of Women: ${Math.floor(d.ShareWomen)}%</h5>         
                                 <!-- <h5>Men: ${d.Men}</h5>            
                                 <h5>Women: ${d.Women}</h5> -->                     
                              </div>`);
