@@ -1,7 +1,7 @@
 # CS171 Ocean's 11 Final Project: Major Differences
 Team Members: Makayla Nyambura, Chloe Shawah, Marika Thompson, and Tito Yak
 
-Project Website: **url**
+Project Website: https://cshawah.github.io/oceans11_finalproj/
 
 Screencast Walkthrough: **url**
 
