@@ -16,7 +16,8 @@ All of the html is contained in the index.html file.
 ### Directories
 
 #### Data
-Contains the csv file of the dataset we worked with. The file was downloaded from this page on Kaggle: [FiveThirtyEight College Majors Dataset](https://www.kaggle.com/fivethirtyeight/fivethirtyeight-college-majors-dataset?select=recent-grads.csv).
+Contains the csv file of the dataset we worked with. The file was downloaded from this page on Kaggle: [FiveThirtyEight College Majors Dataset](https://www.kaggle.com/fivethirtyeight/fivethirtyeight-college-majors-dataset?select=recent-grads.csv). 
+Note that the dataset's individual entries are majors, not individual students, and therefore, the entries themselves are aggregates. To read more about the dataset, please visit the above link on Kaggle. 
 
 #### JS
 Contains all of the javascript files for the visualizations. 

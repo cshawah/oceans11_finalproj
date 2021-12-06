@@ -105,18 +105,17 @@ class ScatterplotVis {
 
         // y domain
         vis.y.domain([d3.min(vis.allData.map(d=> d.Median)) - 3000, d3.max(vis.allData.map(d=> d.Median))]);
-
-
+        
         vis.circles = vis.svg.selectAll("circle")
             .data(vis.displayData);
 
         vis.circles.enter()
             .append("circle")
+            .attr("class", "circle")
+            .merge(vis.circles)
             .attr("cx", function(d){
                 return vis.x(d.ShareWomen)
             })
-            .attr("class", "circle")
-            .merge(vis.circles)
             .attr("cy",function(d){
                 return vis.y(d.Median)
             })
@@ -128,9 +127,8 @@ class ScatterplotVis {
             })
             .style('stroke', "#000")
             .style('opacity', 0.8)
-            .on('mouseover', function(event, d) {
+            .on('click', function(event, d) {
                 vis.majorCategory = d.Major_category
-                vis.wrangleData()
                 vis.tooltip
                     .style("opacity", 1)
                     .style("left", event.pageX + 20 + "px")
@@ -142,15 +140,18 @@ class ScatterplotVis {
                                 <h5>Median Income: $${d.Median.toLocaleString("en-US")}</h5> 
                                 <h5>Percentage of Women: ${Math.floor(d.ShareWomen)}%</h5>                  
                              </div>`);
+
+                vis.wrangleData()
                 }
             ).on('mouseout', function(){
-            vis.majorCategory = ''
-            vis.wrangleData()
+            vis.majorCategory = ""
                 vis.tooltip
                     .style("opacity", 0)
                     .style("left", 0)
                     .style("top", 0)
                     .html(``);
+
+            vis.wrangleData()
             });
 
         vis.circles.exit().remove();
