@@ -111,11 +111,11 @@ class ScatterplotVis {
 
         vis.circles.enter()
             .append("circle")
+            .attr("class", "circle")
+            .merge(vis.circles)
             .attr("cx", function(d){
                 return vis.x(d.ShareWomen)
             })
-            .attr("class", "circle")
-            .merge(vis.circles)
             .attr("cy",function(d){
                 return vis.y(d.Median)
             })
