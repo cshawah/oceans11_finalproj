@@ -3,7 +3,7 @@ Team Members: Makayla Nyambura, Chloe Shawah, Marika Thompson, and Tito Yak
 
 Project Website: https://cshawah.github.io/oceans11_finalproj/
 
-Screencast Walkthrough: **url**
+Screencast Walkthrough: https://drive.google.com/file/d/1MDmpvSZrDlKHnCVzDaX-utMYnJtzi3I6/view?usp=sharing
 
 ## Overview
 
